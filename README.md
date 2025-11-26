@@ -16,5 +16,8 @@
 ## Project Board
 The development and feature tracking are organized in the [Code Mastery Mission Control](https://github.com/users/tigerpadla/projects/8) Kanban board.
 
+## AI Reflection
+GitHub Copilot was used to provide suggestions for some user stories, which were then reviewed and adjusted to fit the project’s specific goals.
+
 ## License
 This project is licensed under the [MIT License](LICENSE).
