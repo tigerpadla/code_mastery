@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cloudinary_storage',
     'cloudinary',
+    'crispy_forms',
+    'crispy_bootstrap5',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -57,6 +59,10 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
+
+# Crispy Forms settings
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 # Allauth settings
 AUTHENTICATION_BACKENDS = [
@@ -113,7 +119,7 @@ WSGI_APPLICATION = 'code_mastery.wsgi.application'
 DATABASES = {"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))}
 
 CSRF_TRUSTED_ORIGINS = ["https://*.herokuapp.com",
-                        "https://*.codeinstitute-ide.net",]
+                        "https://*.codeinstitute-ide.net"]
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
