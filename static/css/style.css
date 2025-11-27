@@ -1,0 +1,547 @@
+/*--------------------------------------------------------------
+# Code Mastery - Custom Styles
+--------------------------------------------------------------*/
+
+:root {
+    /* Color Palette */
+    --blaze-orange: #ff6400;
+    --carbon-black: #1e1e1e;
+    --charcoal: #4a4a4f;
+    --platinum: #e8e8e8;
+    --shamrock: #38a169;
+    --primary-scarlet: #dc2626;
+    
+    /* Extended Colors */
+    --carbon-light: #2d2d2d;
+    --carbon-lighter: #3a3a3a;
+    --orange-hover: #ff7a1a;
+    --orange-dark: #e55a00;
+    --text-muted: #c0c0c0;
+    
+    /* Typography */
+    --font-primary: "Raleway", sans-serif;
+    --font-secondary: "Roboto", sans-serif;
+    --font-code: "Fira Code", monospace;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-orange: 0 4px 20px rgba(255, 100, 0, 0.3);
+}
+
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
+body {
+    font-family: var(--font-secondary);
+    background-color: var(--carbon-black);
+    color: var(--platinum);
+    line-height: 1.6;
+}
+
+a {
+    color: var(--blaze-orange);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--orange-hover);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-primary);
+    font-weight: 600;
+    color: var(--platinum);
+}
+
+code, pre, .code {
+    font-family: var(--font-code);
+}
+
+.text-orange {
+    color: var(--blaze-orange) !important;
+}
+
+.text-success-custom {
+    color: var(--shamrock) !important;
+}
+
+.text-danger-custom {
+    color: var(--primary-scarlet) !important;
+}
+
+.bg-charcoal {
+    background-color: var(--charcoal) !important;
+}
+
+.bg-carbon {
+    background-color: var(--carbon-black) !important;
+}
+
+.bg-carbon-light {
+    background-color: var(--carbon-light) !important;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.lead {
+    color: var(--text-muted);
+}
+
+p {
+    color: var(--platinum);
+}
+
+/*--------------------------------------------------------------
+# Hero Section
+--------------------------------------------------------------*/
+.hero-logo {
+    max-width: 500px;
+    width: 100%;
+    opacity: 0.9;
+    filter: drop-shadow(0 10px 30px rgba(255, 100, 0, 0.2));
+}
+
+/*--------------------------------------------------------------
+# Header / Navigation
+--------------------------------------------------------------*/
+.header {
+    background-color: rgba(30, 30, 30, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 15px 0;
+    transition: all var(--transition-normal);
+    border-bottom: 1px solid transparent;
+    z-index: 1000;
+}
+
+.header.scrolled {
+    padding: 10px 0;
+    box-shadow: var(--shadow-md);
+    border-bottom-color: var(--carbon-lighter);
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-img {
+    height: 50px;
+    width: auto;
+    max-width: 200px;
+}
+
+.logo-text {
+    font-family: var(--font-primary);
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.logo-code {
+    color: var(--platinum);
+}
+
+.logo-o {
+    color: var(--blaze-orange);
+}
+
+.logo-mastery {
+    color: var(--blaze-orange);
+    font-size: 0.7em;
+    font-weight: 500;
+}
+
+/* Navigation Menu */
+.navmenu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 5px;
+}
+
+.navmenu ul li {
+    position: relative;
+}
+
+.navmenu ul li a {
+    color: var(--platinum);
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 6px;
+    transition: all var(--transition-fast);
+}
+
+.navmenu ul li a:hover,
+.navmenu ul li a.active {
+    color: var(--blaze-orange);
+    background-color: var(--carbon-lighter);
+}
+
+/* Dropdown */
+.navmenu .dropdown > a::after {
+    content: none;
+}
+
+.navmenu .dropdown ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 220px;
+    background-color: var(--carbon-light);
+    border: 1px solid var(--carbon-lighter);
+    border-radius: 8px;
+    padding: 10px 0;
+    box-shadow: var(--shadow-lg);
+    flex-direction: column;
+    gap: 0;
+    z-index: 1001;
+}
+
+.navmenu .dropdown:hover > ul {
+    display: flex;
+}
+
+.navmenu .dropdown ul li a {
+    padding: 10px 20px;
+    border-radius: 0;
+    font-size: 0.9rem;
+}
+
+.navmenu .dropdown ul li a:hover {
+    background-color: var(--carbon-lighter);
+}
+
+.navmenu .dropdown-divider {
+    border-color: var(--carbon-lighter);
+    margin: 5px 0;
+}
+
+/* Get Started Button */
+.btn-getstarted {
+    background-color: var(--blaze-orange);
+    color: var(--carbon-black) !important;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 50px;
+    transition: all var(--transition-fast);
+    font-size: 0.95rem;
+}
+
+.btn-getstarted:hover {
+    background-color: var(--orange-hover);
+    box-shadow: var(--shadow-orange);
+    transform: translateY(-2px);
+}
+
+/* Mobile Navigation Toggle */
+.mobile-nav-toggle {
+    display: none;
+    font-size: 1.5rem;
+    color: var(--platinum);
+    cursor: pointer;
+    padding: 10px;
+}
+
+/*--------------------------------------------------------------
+# Main Content
+--------------------------------------------------------------*/
+.main {
+    padding-top: 80px;
+    min-height: calc(100vh - 300px);
+}
+
+/*--------------------------------------------------------------
+# Buttons
+--------------------------------------------------------------*/
+.btn-primary {
+    background-color: var(--blaze-orange);
+    border-color: var(--blaze-orange);
+    color: var(--carbon-black);
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 50px;
+    transition: all var(--transition-fast);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: var(--orange-hover);
+    border-color: var(--orange-hover);
+    color: var(--carbon-black);
+    box-shadow: var(--shadow-orange);
+    transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+    border-color: var(--blaze-orange);
+    color: var(--blaze-orange);
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 50px;
+    transition: all var(--transition-fast);
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+    background-color: var(--blaze-orange);
+    border-color: var(--blaze-orange);
+    color: var(--carbon-black);
+}
+
+.btn-success {
+    background-color: var(--shamrock);
+    border-color: var(--shamrock);
+}
+
+.btn-danger {
+    background-color: var(--primary-scarlet);
+    border-color: var(--primary-scarlet);
+}
+
+/*--------------------------------------------------------------
+# Cards (Quiz Cards)
+--------------------------------------------------------------*/
+.card {
+    background-color: var(--charcoal);
+    border: 1px solid var(--carbon-lighter);
+    border-radius: 12px;
+    transition: all var(--transition-normal);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--blaze-orange);
+}
+
+.card-header {
+    background-color: var(--carbon-light);
+    border-bottom: 1px solid var(--carbon-lighter);
+    border-radius: 12px 12px 0 0 !important;
+}
+
+.card-footer {
+    background-color: var(--carbon-light);
+    border-top: 1px solid var(--carbon-lighter);
+}
+
+/*--------------------------------------------------------------
+# Forms
+--------------------------------------------------------------*/
+.form-control,
+.form-select {
+    background-color: var(--carbon-light);
+    border: 1px solid var(--carbon-lighter);
+    color: var(--platinum);
+    border-radius: 8px;
+    padding: 12px 16px;
+    transition: all var(--transition-fast);
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--carbon-light);
+    border-color: var(--blaze-orange);
+    color: var(--platinum);
+    box-shadow: 0 0 0 3px rgba(255, 100, 0, 0.2);
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+.form-label {
+    color: var(--platinum);
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+/*--------------------------------------------------------------
+# Alerts
+--------------------------------------------------------------*/
+.alert-success {
+    background-color: rgba(56, 161, 105, 0.2);
+    border-color: var(--shamrock);
+    color: var(--shamrock);
+}
+
+.alert-danger {
+    background-color: rgba(220, 38, 38, 0.2);
+    border-color: var(--primary-scarlet);
+    color: var(--primary-scarlet);
+}
+
+.alert-warning {
+    background-color: rgba(255, 100, 0, 0.2);
+    border-color: var(--blaze-orange);
+    color: var(--blaze-orange);
+}
+
+.alert-info {
+    background-color: rgba(59, 130, 246, 0.2);
+    border-color: #3b82f6;
+    color: #60a5fa;
+}
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+.footer {
+    background-color: var(--carbon-light);
+    border-top: 1px solid var(--carbon-lighter);
+}
+
+/* Social Links */
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-links a {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--carbon-lighter);
+    color: var(--platinum);
+    border-radius: 50%;
+    font-size: 1.4rem;
+    transition: all var(--transition-fast);
+}
+
+.social-links a:hover {
+    background-color: var(--blaze-orange);
+    color: var(--carbon-black);
+    transform: translateY(-3px);
+}
+
+/* Copyright */
+.copyright {
+    background-color: var(--carbon-light);
+    padding: 30px 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--carbon-lighter);
+}
+
+.copyright .credits {
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+.copyright .social-links {
+    display: flex;
+    gap: 15px;
+}
+
+/* Back to Top */
+.back-to-top {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--blaze-orange);
+    color: var(--carbon-black);
+    border-radius: 50%;
+    transition: all var(--transition-fast);
+}
+
+.back-to-top:hover {
+    background-color: var(--orange-hover);
+    color: var(--carbon-black);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-orange);
+}
+
+/*--------------------------------------------------------------
+# Quiz Specific Styles
+--------------------------------------------------------------*/
+.quiz-card {
+    background-color: var(--charcoal);
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid var(--carbon-lighter);
+}
+
+.quiz-option {
+    background-color: var(--carbon-light);
+    border: 2px solid var(--carbon-lighter);
+    border-radius: 12px;
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    margin-bottom: 12px;
+}
+
+.quiz-option:hover {
+    border-color: var(--blaze-orange);
+    background-color: var(--carbon-lighter);
+}
+
+.quiz-option.selected {
+    border-color: var(--blaze-orange);
+    background-color: rgba(255, 100, 0, 0.1);
+}
+
+.quiz-option.correct {
+    border-color: var(--shamrock);
+    background-color: rgba(56, 161, 105, 0.2);
+}
+
+.quiz-option.incorrect {
+    border-color: var(--primary-scarlet);
+    background-color: rgba(220, 38, 38, 0.2);
+}
+
+/*--------------------------------------------------------------
+# Responsive
+--------------------------------------------------------------*/
+@media (max-width: 1199px) {
+    .navmenu {
+        display: none;
+    }
+    
+    .mobile-nav-toggle {
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    .main {
+        padding-top: 70px;
+    }
+    
+    .footer-top {
+        padding: 40px 0 30px;
+    }
+    
+    .logo-text {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .btn-getstarted {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+}

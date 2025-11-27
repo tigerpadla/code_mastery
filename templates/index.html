@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section id="hero" class="hero section">
+    <div class="container">
+        <div class="row align-items-center min-vh-75">
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <h1 class="display-4 fw-bold mb-4">
+                        Master Your Code with <span class="text-orange">AI-Powered</span> Quizzes
+                    </h1>
+                    <p class="lead mb-4 text-muted">
+                        Test your programming knowledge, challenge yourself with AI-generated quizzes, 
+                        and track your progress as you become a better developer.
+                    </p>
+                    
+                    <!-- AI Quiz Generator -->
+                    <div class="quiz-generator mb-4">
+                        <form id="quiz-generator-form" action="{% url 'quizzes:generate' %}" method="post" class="d-flex gap-2">
+                            {% csrf_token %}
+                            <input type="text" 
+                                   name="topic" 
+                                   class="form-control form-control-lg" 
+                                   placeholder="Enter a topic (e.g., Python loops, JavaScript arrays...)"
+                                   required>
+                            <button type="submit" class="btn btn-primary btn-lg" title="Generate AI Quiz">
+                                <i class="fas fa-dice"></i>
+                            </button>
+                        </form>
+                        <small class="text-muted mt-2 d-block">
+                            <i class="fas fa-wand-magic-sparkles me-1"></i>
+                            Let AI create a personalized quiz for you
+                        </small>
+                    </div>
+                    
+                    <div class="hero-buttons d-flex gap-3 flex-wrap">
+                        <button type="submit" form="quiz-generator-form" class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-wand-magic-sparkles me-2"></i>Generate Quiz
+                        </button>
+                        {% if not user.is_authenticated %}
+                        <a href="{% url 'account_signup' %}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-user-plus me-2"></i>Sign Up Free
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="hero-image text-center">
+                    <img src="{% static 'images/logo.png' %}" 
+                         alt="Code Mastery" 
+                         class="img-fluid hero-logo">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="features section py-5">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="fw-bold">Why Code Mastery?</h2>
+                <p class="text-muted">Everything you need to level up your coding skills</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 text-center p-4">
+                    <div class="card-body">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-robot fa-3x text-orange"></i>
+                        </div>
+                        <h4 class="text-orange">AI-Generated Quizzes</h4>
+                        <p class="text-muted">
+                            Enter any programming topic and let our AI create a custom quiz tailored to your learning needs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 text-center p-4">
+                    <div class="card-body">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-chart-line fa-3x text-orange"></i>
+                        </div>
+                        <h4 class="text-orange">Track Progress</h4>
+                        <p class="text-muted">
+                            Monitor your performance over time, see your strengths and areas for improvement.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 text-center p-4">
+                    <div class="card-body">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-share-alt fa-3x text-orange"></i>
+                        </div>
+                        <h4 class="text-orange">Share & Compete</h4>
+                        <p class="text-muted">
+                            Create quizzes, share them with friends, and challenge others to beat your scores.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Quizzes Section -->
+<section id="quizzes" class="quizzes section py-5 bg-carbon-light">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="fw-bold">Featured Quizzes</h2>
+                <p class="text-muted mb-0">Start with our hand-picked quizzes</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            {% for quiz in featured_quizzes %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card quiz-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <span class="badge bg-charcoal">
+                                <i class="fas fa-question-circle me-1"></i>
+                                {{ quiz.questions.count }} Questions
+                            </span>
+                            {% if quiz.is_ai_generated %}
+                            <span class="badge bg-warning text-dark">
+                                <i class="fas fa-robot me-1"></i>AI
+                            </span>
+                            {% endif %}
+                        </div>
+                        <h5 class="card-title">{{ quiz.title }}</h5>
+                        <p class="card-text text-muted small">
+                            {{ quiz.description|truncatewords:20 }}
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <small class="text-muted">
+                                <i class="fas fa-user me-1"></i>
+                                {{ quiz.creator.username|default:"Anonymous" }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+                <h4>No quizzes yet</h4>
+                <p class="text-muted">Be the first to create one!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section id="cta" class="cta section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="fw-bold mb-4">Prefer to Create Your Own?</h2>
+                <p class="lead text-muted mb-4">
+                    Not just AI - you can manually craft your own quizzes from scratch. 
+                    Perfect for teachers, study groups, or testing specific topics your way.
+                </p>
+                {% if user.is_authenticated %}
+                <a href="{% url 'quizzes:create' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-pen me-2"></i>Create Manual Quiz
+                </a>
+                {% else %}
+                <a href="{% url 'account_signup' %}" class="btn btn-primary btn-lg me-3">
+                    <i class="fas fa-rocket me-2"></i>Get Started Free
+                </a>
+                <a href="{% url 'account_login' %}" class="btn btn-outline-primary btn-lg">
+                    Already have an account?
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .min-vh-75 {
+        min-height: 75vh;
+    }
+    
+    .hero {
+        padding-top: 40px;
+    }
+    
+    .feature-icon {
+        opacity: 0.9;
+    }
+    
+    .quiz-generator .form-control {
+        border-radius: 50px 0 0 50px;
+    }
+    
+    .quiz-generator .btn {
+        border-radius: 0 50px 50px 0;
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+</style>
+{% endblock %}
