@@ -93,3 +93,34 @@
     background-color: var(--platinum);
     color: var(--carbon-black);
 }
+
+/*--------------------------------------------------------------
+# Unanswered Question Highlighting
+--------------------------------------------------------------*/
+.question-card.unanswered {
+    border-left: 4px solid var(--primary-scarlet);
+    box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.3);
+}
+
+.question-card.unanswered .card-header {
+    background-color: rgba(220, 38, 38, 0.1);
+}
+
+.question-card.unanswered-pulse {
+    animation: unansweredPulse 0.5s ease-in-out 3;
+}
+
+@keyframes unansweredPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 15px 3px rgba(220, 38, 38, 0.5);
+    }
+}
+
+.quiz-validation-alert {
+    background-color: rgba(255, 193, 7, 0.15);
+    border-color: var(--bs-warning);
+    color: var(--bs-warning);
+}

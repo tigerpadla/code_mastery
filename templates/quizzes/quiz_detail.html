@@ -43,7 +43,7 @@
         <!-- Quiz Form -->
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <form id="quiz-form" method="post" action="{% url 'quizzes:submit' slug=quiz.slug %}">
+                <form id="quiz-form" method="post" action="{% url 'quizzes:submit' slug=quiz.slug %}" novalidate>
                     {% csrf_token %}
                     
                     {% for question in questions %}
@@ -59,7 +59,7 @@
                                     <input class="form-check-input" type="radio" 
                                            name="question_{{ question.id }}" 
                                            id="q{{ question.id }}_a" 
-                                           value="A" required>
+                                           value="A">
                                     <label class="form-check-label" for="q{{ question.id }}_a">
                                         <span class="option-letter">A</span>
                                         {{ question.option_a }}
@@ -118,4 +118,8 @@
 
 {% block extra_css %}
 <link href="{% static 'css/pages/quiz-detail.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/pages/quiz-detail.js' %}"></script>
 {% endblock %}

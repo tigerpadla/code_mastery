@@ -205,11 +205,4 @@
         }
     }, true);
 
-    /**
-     * Initialize on DOM ready
-     */
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('Code Mastery initialized');
-    });
-
 })();
