@@ -188,6 +188,20 @@
         </div>
     </div>
 </section>
+
+<!-- Loading Modal -->
+<div id="loading-modal" class="loading-modal">
+    <div class="loading-content">
+        <img src="{% static 'images/logo-loader.png' %}" alt="Loading..." class="loading-logo">
+        <h3 class="loading-title">Generating Your Quiz</h3>
+        <p class="loading-text">Our AI is crafting personalized questions for you...</p>
+        <div class="loading-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_css %}
@@ -213,5 +227,146 @@
         padding-left: 24px;
         padding-right: 24px;
     }
+    
+    /* Loading Modal Styles */
+    .loading-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(30, 30, 30, 0.95);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .loading-modal.active {
+        display: flex;
+    }
+    
+    .loading-content {
+        text-align: center;
+        padding: 40px;
+    }
+    
+    .loading-logo {
+        width: 150px;
+        height: auto;
+        animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% {
+            opacity: 0.4;
+            transform: scale(0.95);
+        }
+        50% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    
+    .loading-title {
+        color: var(--blaze-orange);
+        margin-top: 30px;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+    
+    .loading-text {
+        color: var(--text-muted);
+        margin-bottom: 20px;
+    }
+    
+    .loading-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+    }
+    
+    .loading-dots span {
+        width: 12px;
+        height: 12px;
+        background-color: var(--blaze-orange);
+        border-radius: 50%;
+        animation: bounce 1.4s ease-in-out infinite;
+    }
+    
+    .loading-dots span:nth-child(1) {
+        animation-delay: 0s;
+    }
+    
+    .loading-dots span:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    
+    .loading-dots span:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+    
+    @keyframes bounce {
+        0%, 80%, 100% {
+            transform: scale(0.6);
+            opacity: 0.5;
+        }
+        40% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+    
+    /* Disabled button styles during loading */
+    .btn:disabled,
+    .btn.disabled {
+        background-color: var(--carbon-light) !important;
+        border-color: var(--carbon-lighter) !important;
+        color: var(--text-muted) !important;
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
 </style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('quiz-generator-form');
+        const loadingModal = document.getElementById('loading-modal');
+        let isSubmitting = false;
+        
+        form.addEventListener('submit', function(e) {
+            // Prevent double submission
+            if (isSubmitting) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Check if form is valid
+            const topicInput = form.querySelector('input[name="topic"]');
+            if (!topicInput.value.trim()) {
+                return false;
+            }
+            
+            // Set flag and show loading modal
+            isSubmitting = true;
+            loadingModal.classList.add('active');
+            
+            // Disable visible form elements after a tiny delay to allow form submission
+            setTimeout(function() {
+                // Disable only visible inputs and buttons (not hidden CSRF token)
+                form.querySelectorAll('input[type="text"], button').forEach(el => {
+                    el.disabled = true;
+                });
+                
+                // Also disable the external generate button
+                const externalBtn = document.querySelector('button[form="quiz-generator-form"]');
+                if (externalBtn) {
+                    externalBtn.disabled = true;
+                }
+            }, 10);
+        });
+    });
+</script>
 {% endblock %}
