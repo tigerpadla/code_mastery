@@ -11,10 +11,11 @@ class QuestionInline(admin.TabularInline):
 @admin.register(Quiz)
 class QuizAdmin(admin.ModelAdmin):
     """Admin configuration for Quiz model."""
-    list_display = ('title', 'creator', 'is_ai_generated', 'is_public', 'created_at')
+    list_display = ('title', 'slug', 'creator', 'is_ai_generated', 'is_public', 'created_at')
     list_filter = ('is_ai_generated', 'is_public', 'created_at')
-    search_fields = ('title', 'description', 'creator__username')
-    readonly_fields = ('public_id', 'created_at', 'updated_at')
+    search_fields = ('title', 'description', 'creator__username', 'slug')
+    readonly_fields = ('slug', 'created_at', 'updated_at')
+    prepopulated_fields = {'slug': ('title',)}
     inlines = [QuestionInline]
 
 

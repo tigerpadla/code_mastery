@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Results - {{ quiz.title }}{% endblock %}
+
+{% block content %}
+<section class="quiz-results section py-5">
+    <div class="container">
+        <!-- Results Header -->
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <div class="score-circle mb-4">
+                    <div class="score-value {% if score_percentage >= 70 %}text-success{% elif score_percentage >= 50 %}text-warning{% else %}text-danger{% endif %}">
+                        {{ score_percentage }}%
+                    </div>
+                    <div class="score-label">Score</div>
+                </div>
+                <h1 class="fw-bold mb-3">
+                    {% if score_percentage >= 70 %}
+                    <i class="fas fa-trophy text-warning me-2"></i>Great Job!
+                    {% elif score_percentage >= 50 %}
+                    <i class="fas fa-thumbs-up text-orange me-2"></i>Good Effort!
+                    {% else %}
+                    <i class="fas fa-book text-info me-2"></i>Keep Learning!
+                    {% endif %}
+                </h1>
+                <p class="lead text-muted">
+                    You got <strong>{{ correct_count }}</strong> out of <strong>{{ total_questions }}</strong> questions correct
+                    on <strong>{{ quiz.title }}</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- Results Breakdown -->
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h3 class="mb-4">
+                    <i class="fas fa-list-check me-2 text-orange"></i>Results Breakdown
+                </h3>
+                
+                {% for result in results %}
+                <div class="card mb-4 result-card {% if result.is_correct %}result-correct{% else %}result-incorrect{% endif %}">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span class="question-number">Question {{ forloop.counter }}</span>
+                        {% if result.is_correct %}
+                        <span class="badge bg-success">
+                            <i class="fas fa-check me-1"></i>Correct
+                        </span>
+                        {% else %}
+                        <span class="badge bg-danger">
+                            <i class="fas fa-times me-1"></i>Incorrect
+                        </span>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <p class="question-text mb-4">{{ result.question.text }}</p>
+                        
+                        <div class="options">
+                            {% with q=result.question %}
+                            <!-- Option A -->
+                            <div class="result-option mb-2 {% if q.correct_answer == 'A' %}correct-answer{% endif %} {% if result.user_answer == 'A' and not result.is_correct %}wrong-answer{% endif %}">
+                                <span class="option-letter {% if q.correct_answer == 'A' %}bg-success{% elif result.user_answer == 'A' %}bg-danger{% endif %}">A</span>
+                                {{ q.option_a }}
+                                {% if q.correct_answer == 'A' %}
+                                <i class="fas fa-check-circle text-success ms-auto"></i>
+                                {% elif result.user_answer == 'A' %}
+                                <i class="fas fa-times-circle text-danger ms-auto"></i>
+                                {% endif %}
+                            </div>
+                            <!-- Option B -->
+                            <div class="result-option mb-2 {% if q.correct_answer == 'B' %}correct-answer{% endif %} {% if result.user_answer == 'B' and not result.is_correct %}wrong-answer{% endif %}">
+                                <span class="option-letter {% if q.correct_answer == 'B' %}bg-success{% elif result.user_answer == 'B' %}bg-danger{% endif %}">B</span>
+                                {{ q.option_b }}
+                                {% if q.correct_answer == 'B' %}
+                                <i class="fas fa-check-circle text-success ms-auto"></i>
+                                {% elif result.user_answer == 'B' %}
+                                <i class="fas fa-times-circle text-danger ms-auto"></i>
+                                {% endif %}
+                            </div>
+                            <!-- Option C -->
+                            <div class="result-option mb-2 {% if q.correct_answer == 'C' %}correct-answer{% endif %} {% if result.user_answer == 'C' and not result.is_correct %}wrong-answer{% endif %}">
+                                <span class="option-letter {% if q.correct_answer == 'C' %}bg-success{% elif result.user_answer == 'C' %}bg-danger{% endif %}">C</span>
+                                {{ q.option_c }}
+                                {% if q.correct_answer == 'C' %}
+                                <i class="fas fa-check-circle text-success ms-auto"></i>
+                                {% elif result.user_answer == 'C' %}
+                                <i class="fas fa-times-circle text-danger ms-auto"></i>
+                                {% endif %}
+                            </div>
+                            <!-- Option D -->
+                            <div class="result-option mb-2 {% if q.correct_answer == 'D' %}correct-answer{% endif %} {% if result.user_answer == 'D' and not result.is_correct %}wrong-answer{% endif %}">
+                                <span class="option-letter {% if q.correct_answer == 'D' %}bg-success{% elif result.user_answer == 'D' %}bg-danger{% endif %}">D</span>
+                                {{ q.option_d }}
+                                {% if q.correct_answer == 'D' %}
+                                <i class="fas fa-check-circle text-success ms-auto"></i>
+                                {% elif result.user_answer == 'D' %}
+                                <i class="fas fa-times-circle text-danger ms-auto"></i>
+                                {% endif %}
+                            </div>
+                            {% endwith %}
+                        </div>
+                        
+                        {% if result.question.explanation %}
+                        <div class="explanation mt-3 p-3">
+                            <strong><i class="fas fa-lightbulb text-warning me-2"></i>Explanation:</strong>
+                            <p class="mb-0 mt-2">{{ result.question.explanation }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+
+                <!-- Action Buttons -->
+                <div class="d-flex justify-content-between align-items-center mt-5">
+                    <a href="{% url 'home' %}" class="btn btn-back">
+                        <i class="fas fa-home me-2"></i>Back to Home
+                    </a>
+                    <div>
+                        <a href="{% url 'quizzes:detail' slug=quiz.slug %}" class="btn btn-outline-primary me-2">
+                            <i class="fas fa-redo me-2"></i>Try Again
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .score-circle {
+        display: inline-block;
+    }
+    
+    .score-value {
+        font-size: 4rem;
+        font-weight: 700;
+        line-height: 1;
+    }
+    
+    .score-label {
+        font-size: 1.25rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+    
+    .result-card.result-correct {
+        border-left: 4px solid var(--shamrock);
+    }
+    
+    .result-card.result-incorrect {
+        border-left: 4px solid var(--primary-scarlet);
+    }
+    
+    .result-card {
+        background-color: var(--carbon-light);
+    }
+    
+    .result-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+    
+    .result-card .card-header {
+        background-color: transparent;
+        border-bottom: 1px solid var(--charcoal);
+    }
+    
+    .question-number {
+        font-weight: 600;
+        color: var(--platinum);
+    }
+    
+    .question-text {
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+    
+    .result-option {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        border-radius: 8px;
+        border: 1px solid var(--charcoal);
+        color: var(--platinum);
+    }
+    
+    .result-option.correct-answer {
+        border-color: var(--shamrock);
+        background-color: rgba(56, 161, 105, 0.1);
+        color: var(--platinum);
+    }
+    
+    .result-option.wrong-answer {
+        border-color: var(--primary-scarlet);
+        background-color: rgba(220, 38, 38, 0.1);
+    }
+    
+    .option-letter {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background-color: var(--charcoal);
+        color: var(--platinum);
+        font-weight: 600;
+        font-size: 0.85rem;
+        margin-right: 12px;
+        flex-shrink: 0;
+    }
+    
+    .explanation {
+        background-color: rgba(255, 193, 7, 0.1);
+        border-radius: 8px;
+        border-left: 3px solid var(--bs-warning);
+    }
+    
+    .explanation strong {
+        color: var(--bs-warning);
+    }
+    
+    .btn-back {
+        background-color: transparent;
+        border: 1px solid var(--platinum);
+        color: var(--platinum);
+    }
+    
+    .btn-back:hover {
+        background-color: var(--platinum);
+        color: var(--carbon-black);
+    }
+    
+    .text-success {
+        color: var(--shamrock) !important;
+    }
+    
+    .text-danger {
+        color: var(--primary-scarlet) !important;
+    }
+    
+    .bg-success {
+        background-color: var(--shamrock) !important;
+        color: white !important;
+    }
+    
+    .bg-danger {
+        background-color: var(--primary-scarlet) !important;
+        color: white !important;
+    }
+</style>
+{% endblock %}

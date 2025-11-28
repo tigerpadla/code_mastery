@@ -1,16 +1,16 @@
-import uuid
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 
 class Quiz(models.Model):
     """Quiz model for AI-generated and manual quizzes."""
 
-    public_id = models.UUIDField(
-        default=uuid.uuid4,
+    slug = models.SlugField(
+        max_length=250,
         unique=True,
-        editable=False,
-        db_index=True
+        db_index=True,
+        blank=True
     )
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
@@ -32,6 +32,17 @@ class Quiz(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.title)
+            slug = base_slug
+            counter = 1
+            while Quiz.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
 
 
 class Question(models.Model):
