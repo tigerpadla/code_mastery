@@ -24,10 +24,11 @@
                             {% csrf_token %}
                             <input type="text" 
                                    name="topic" 
+                                   id="topic-input"
                                    class="form-control form-control-lg" 
                                    placeholder="Enter a topic (e.g., Python loops, JavaScript arrays...)"
                                    required>
-                            <button type="submit" class="btn btn-primary btn-lg" title="Generate AI Quiz">
+                            <button type="button" id="random-topic-btn" class="btn btn-primary btn-lg" title="Get Random Topic">
                                 <i class="fas fa-dice"></i>
                             </button>
                         </form>
