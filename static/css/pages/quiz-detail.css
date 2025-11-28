@@ -1,0 +1,95 @@
+/*--------------------------------------------------------------
+# Quiz Detail Page Styles
+--------------------------------------------------------------*/
+
+.question-card {
+    border-left: 4px solid var(--blaze-orange);
+}
+
+.question-card:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.question-card .card-header {
+    background-color: rgba(255, 100, 0, 0.1);
+    border-bottom: 1px solid var(--charcoal);
+}
+
+.question-number {
+    font-weight: 600;
+    color: var(--platinum);
+}
+
+.question-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/*--------------------------------------------------------------
+# Quiz Options
+--------------------------------------------------------------*/
+.option-item {
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--charcoal);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.option-item:hover {
+    border-color: var(--blaze-orange);
+    background-color: rgba(255, 100, 0, 0.05);
+}
+
+.option-item:has(.form-check-input:checked) {
+    border-color: var(--blaze-orange);
+    background-color: rgba(255, 100, 0, 0.1);
+}
+
+.option-item .form-check-input {
+    display: none;
+}
+
+.option-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--carbon-black);
+    color: var(--platinum);
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-right: 12px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.form-check-input:checked ~ .form-check-label .option-letter {
+    background-color: var(--blaze-orange);
+    color: white;
+}
+
+.form-check-label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    color: var(--platinum);
+}
+
+/*--------------------------------------------------------------
+# Back Button
+--------------------------------------------------------------*/
+.btn-back {
+    background-color: transparent;
+    border: 1px solid var(--platinum);
+    color: var(--platinum);
+}
+
+.btn-back:hover {
+    background-color: var(--platinum);
+    color: var(--carbon-black);
+}
