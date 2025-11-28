@@ -14,11 +14,92 @@ class QuizGeneratorService:
 
     API_URL = "https://models.inference.ai.azure.com/chat/completions"
     MODEL = "gpt-4o-mini"
+    
+    # Programming and tech-related keywords for topic validation
+    ALLOWED_KEYWORDS = [
+        # Programming Languages
+        'python', 'javascript', 'java', 'c++', 'c#', 'csharp', 'ruby', 'php',
+        'swift', 'kotlin', 'go', 'golang', 'rust', 'typescript', 'scala',
+        'perl', 'r ', 'matlab', 'lua', 'dart', 'elixir', 'haskell', 'clojure',
+        
+        # Web Development
+        'html', 'css', 'sass', 'scss', 'less', 'bootstrap', 'tailwind',
+        'react', 'angular', 'vue', 'svelte', 'next.js', 'nextjs', 'nuxt',
+        'node', 'express', 'django', 'flask', 'fastapi', 'rails', 'laravel',
+        'asp.net', 'spring', 'frontend', 'backend', 'fullstack', 'full-stack',
+        'web development', 'web design', 'responsive', 'ajax', 'fetch', 'api',
+        'rest', 'graphql', 'websocket', 'http', 'dom', 'browser',
+        
+        # Databases
+        'sql', 'mysql', 'postgresql', 'postgres', 'mongodb', 'redis', 'sqlite',
+        'oracle', 'database', 'nosql', 'query', 'queries', 'orm', 'schema',
+        'normalization', 'index', 'join', 'crud',
+        
+        # DevOps & Tools
+        'git', 'github', 'gitlab', 'bitbucket', 'docker', 'kubernetes', 'k8s',
+        'aws', 'azure', 'gcp', 'cloud', 'linux', 'unix', 'bash', 'shell',
+        'ci/cd', 'jenkins', 'devops', 'deployment', 'server', 'nginx', 'apache',
+        'terminal', 'command line', 'cli', 'ssh', 'heroku', 'vercel', 'netlify',
+        
+        # Programming Concepts
+        'algorithm', 'data structure', 'array', 'list', 'dictionary', 'hash',
+        'tree', 'graph', 'stack', 'queue', 'heap', 'linked list', 'binary',
+        'sorting', 'searching', 'recursion', 'iteration', 'loop', 'function',
+        'class', 'object', 'oop', 'object-oriented', 'inheritance', 'polymorphism',
+        'encapsulation', 'abstraction', 'interface', 'design pattern', 'solid',
+        'dry', 'kiss', 'clean code', 'refactoring', 'debugging', 'testing',
+        'unit test', 'tdd', 'bdd', 'agile', 'scrum',
+        
+        # Data & AI
+        'machine learning', 'ml', 'artificial intelligence', 'ai', 'deep learning',
+        'neural network', 'tensorflow', 'pytorch', 'pandas', 'numpy', 'scipy',
+        'data science', 'data analysis', 'big data', 'data engineering',
+        'statistics', 'visualization', 'matplotlib', 'jupyter', 'notebook',
+        
+        # Security & Networking
+        'security', 'cybersecurity', 'encryption', 'authentication', 'oauth',
+        'jwt', 'csrf', 'xss', 'sql injection', 'hashing', 'ssl', 'tls',
+        'networking', 'tcp', 'ip', 'dns', 'firewall', 'vpn', 'protocol',
+        
+        # Mobile Development
+        'android', 'ios', 'mobile', 'react native', 'flutter', 'xamarin',
+        'app development', 'mobile app',
+        
+        # General Tech
+        'programming', 'coding', 'software', 'developer', 'development',
+        'computer science', 'cs', 'tech', 'technology', 'it', 'information technology',
+        'framework', 'library', 'package', 'module', 'dependency', 'npm', 'pip',
+        'version control', 'ide', 'editor', 'vscode', 'visual studio',
+        'variable', 'constant', 'string', 'integer', 'float', 'boolean',
+        'conditional', 'if statement', 'switch', 'exception', 'error handling',
+        'async', 'await', 'promise', 'callback', 'closure', 'scope',
+        'memory', 'pointer', 'reference', 'garbage collection', 'compiler',
+        'interpreter', 'runtime', 'syntax', 'semantics', 'paradigm',
+    ]
 
     def __init__(self):
         self.token = os.environ.get("GITHUB_TOKEN")
         if not self.token:
             raise ValueError("GITHUB_TOKEN environment variable not set")
+
+    def is_valid_topic(self, topic: str) -> bool:
+        """
+        Check if the topic is related to programming/technology.
+        
+        Args:
+            topic: The topic to validate
+            
+        Returns:
+            True if topic is programming-related, False otherwise
+        """
+        topic_lower = topic.lower()
+        
+        # Check if any allowed keyword is in the topic
+        for keyword in self.ALLOWED_KEYWORDS:
+            if keyword in topic_lower:
+                return True
+        
+        return False
 
     def generate_quiz(
         self, topic: str, num_questions: int = 5, difficulty: str = "medium"
@@ -33,7 +114,17 @@ class QuizGeneratorService:
 
         Returns:
             Dictionary with quiz data or None if generation fails
+            
+        Raises:
+            ValueError: If topic is not programming-related
         """
+        # Validate topic is programming-related
+        if not self.is_valid_topic(topic):
+            raise ValueError(
+                "Please enter a programming or technology-related topic. "
+                "Examples: Python loops, JavaScript arrays, SQL queries, Git commands..."
+            )
+        
         prompt = self._build_prompt(topic, num_questions, difficulty)
 
         headers = {
@@ -47,8 +138,13 @@ class QuizGeneratorService:
                 {
                     "role": "system",
                     "content": (
-                        "You are a programming quiz generator. Generate quiz questions "
-                        "in valid JSON format only. No markdown, no code blocks, just pure JSON."
+                        "You are a programming and technology quiz generator. "
+                        "You ONLY generate quizzes about programming, software development, "
+                        "computer science, and technology topics. "
+                        "If asked about non-tech topics (cooking, sports, entertainment, etc.), "
+                        "refuse and return an error. "
+                        "Generate quiz questions in valid JSON format only. "
+                        "No markdown, no code blocks, just pure JSON."
                     ),
                 },
                 {"role": "user", "content": prompt},
