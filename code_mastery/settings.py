@@ -37,14 +37,6 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
 ]
 
-# Security settings for production (Heroku handles SSL)
-if not DEBUG:
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-
 # Application definition
 
 INSTALLED_APPS = [
