@@ -139,3 +139,67 @@
     background-color: var(--primary-scarlet) !important;
     color: white !important;
 }
+
+/*--------------------------------------------------------------
+# Share Button
+--------------------------------------------------------------*/
+.btn-share {
+    background-color: transparent;
+    border: 1px solid var(--platinum);
+    color: var(--platinum);
+}
+
+.btn-share:hover {
+    background-color: var(--blaze-orange);
+    border-color: var(--blaze-orange);
+    color: white;
+}
+
+.btn-share:active,
+.btn-share:focus,
+.btn-share:focus-visible {
+    background-color: var(--blaze-orange) !important;
+    border-color: var(--blaze-orange) !important;
+    color: white !important;
+    box-shadow: none !important;
+}
+
+/*--------------------------------------------------------------
+# Share Toast Notification
+--------------------------------------------------------------*/
+.share-toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background-color: var(--carbon-black);
+    color: var(--platinum);
+    padding: 12px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    opacity: 0;
+    transition: all 0.3s ease;
+    border: 1px solid var(--charcoal);
+}
+
+.share-toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.share-toast-success {
+    border-left: 4px solid var(--blaze-orange);
+}
+
+.share-toast-success i {
+    color: var(--blaze-orange);
+}
+
+.share-toast-error {
+    border-left: 4px solid var(--primary-scarlet);
+}
+
+.share-toast-error i {
+    color: var(--primary-scarlet);
+}

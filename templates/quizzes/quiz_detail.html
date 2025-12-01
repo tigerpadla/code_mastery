@@ -21,10 +21,18 @@
                         </span>
                         {% endif %}
                     </div>
-                    <span class="badge bg-charcoal">
-                        <i class="fas fa-question-circle me-1"></i>
-                        {{ questions|length }} Questions
-                    </span>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="badge bg-charcoal">
+                            <i class="fas fa-question-circle me-1"></i>
+                            {{ questions|length }} Questions
+                        </span>
+                        <button type="button" class="btn btn-sm btn-share share-btn" 
+                                data-quiz-url="{{ request.build_absolute_uri }}"
+                                data-quiz-title="{{ quiz.title }}"
+                                title="Share this quiz">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
                 </div>
                 <h1 class="fw-bold mb-3 text-orange">{{ quiz.title }}</h1>
                 {% if quiz.description %}
