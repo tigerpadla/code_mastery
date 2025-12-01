@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load socialaccount %}
+
+{% block title %}Sign In - Code Mastery{% endblock %}
+
+{% block content %}
+<section class="auth-section min-vh-100 d-flex align-items-center py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card auth-card">
+                    <div class="card-body p-4 p-md-5">
+                        <!-- Header -->
+                        <div class="text-center mb-4">
+                            <a href="{% url 'home' %}" class="d-inline-block mb-3">
+                                <img src="{% static 'images/logo.png' %}" alt="Code Mastery" height="50">
+                            </a>
+                            <h2 class="fw-bold text-orange mb-2">Welcome Back!</h2>
+                            <p class="text-muted">Sign in to continue your learning journey</p>
+                        </div>
+
+                        <!-- Social Login Buttons -->
+                        <div class="social-login mb-4">
+                            <p class="text-center text-muted small mb-3">Sign in with</p>
+                            <div class="d-flex flex-wrap justify-content-center gap-2">
+                                {% get_providers as socialaccount_providers %}
+                                {% for provider in socialaccount_providers %}
+                                <a href="{% provider_login_url provider.id %}" 
+                                   class="btn btn-social btn-{{ provider.id }}"
+                                   title="Sign in with {{ provider.name }}">
+                                    {% if provider.id == 'google' %}
+                                    <i class="fab fa-google"></i>
+                                    {% elif provider.id == 'github' %}
+                                    <i class="fab fa-github"></i>
+                                    {% elif provider.id == 'linkedin_oauth2' %}
+                                    <i class="fab fa-linkedin-in"></i>
+                                    {% elif provider.id == 'microsoft' %}
+                                    <i class="fab fa-microsoft"></i>
+                                    {% elif provider.id == 'apple' %}
+                                    <i class="fab fa-apple"></i>
+                                    {% endif %}
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- Divider -->
+                        <div class="divider d-flex align-items-center mb-4">
+                            <hr class="flex-grow-1">
+                            <span class="px-3 text-muted small">or continue with email</span>
+                            <hr class="flex-grow-1">
+                        </div>
+
+                        <!-- Login Form -->
+                        <form method="post" action="{% url 'account_login' %}">
+                            {% csrf_token %}
+                            
+                            {% if form.non_field_errors %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {% for error in form.non_field_errors %}
+                                {{ error }}
+                                {% endfor %}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                            {% endif %}
+
+                            <div class="mb-3">
+                                <label for="id_login" class="form-label">Username or Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input type="text" name="login" id="id_login" 
+                                           class="form-control {% if form.login.errors %}is-invalid{% endif %}"
+                                           placeholder="Enter your username or email"
+                                           value="{{ form.login.value|default:'' }}" required>
+                                </div>
+                                {% if form.login.errors %}
+                                <div class="invalid-feedback d-block">{{ form.login.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="id_password" class="form-label">Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    <input type="password" name="password" id="id_password" 
+                                           class="form-control {% if form.password.errors %}is-invalid{% endif %}"
+                                           placeholder="Enter your password" required>
+                                </div>
+                                {% if form.password.errors %}
+                                <div class="invalid-feedback d-block">{{ form.password.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <div class="form-check">
+                                    <input type="checkbox" name="remember" id="id_remember" class="form-check-input">
+                                    <label for="id_remember" class="form-check-label small">Remember me</label>
+                                </div>
+                                <a href="{% url 'account_reset_password' %}" class="small text-orange">Forgot password?</a>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 py-2 mb-3">
+                                <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                            </button>
+                        </form>
+
+                        <!-- Sign Up Link -->
+                        <p class="text-center text-muted mb-0">
+                            Don't have an account? 
+                            <a href="{% url 'account_signup' %}" class="text-orange fw-semibold">Sign Up</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/pages/auth.css' %}" rel="stylesheet">
+{% endblock %}

@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load socialaccount %}
+
+{% block title %}Sign Up - Code Mastery{% endblock %}
+
+{% block content %}
+<section class="auth-section min-vh-100 d-flex align-items-center py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card auth-card">
+                    <div class="card-body p-4 p-md-5">
+                        <!-- Header -->
+                        <div class="text-center mb-4">
+                            <a href="{% url 'home' %}" class="d-inline-block mb-3">
+                                <img src="{% static 'images/logo.png' %}" alt="Code Mastery" height="50">
+                            </a>
+                            <h2 class="fw-bold text-orange mb-2">Create Account</h2>
+                            <p class="text-muted">Join Code Mastery and start learning</p>
+                        </div>
+
+                        <!-- Social Login Buttons -->
+                        <div class="social-login mb-4">
+                            <p class="text-center text-muted small mb-3">Sign up with</p>
+                            <div class="d-flex flex-wrap justify-content-center gap-2">
+                                {% get_providers as socialaccount_providers %}
+                                {% for provider in socialaccount_providers %}
+                                <a href="{% provider_login_url provider.id %}" 
+                                   class="btn btn-social btn-{{ provider.id }}"
+                                   title="Sign up with {{ provider.name }}">
+                                    {% if provider.id == 'google' %}
+                                    <i class="fab fa-google"></i>
+                                    {% elif provider.id == 'github' %}
+                                    <i class="fab fa-github"></i>
+                                    {% elif provider.id == 'linkedin_oauth2' %}
+                                    <i class="fab fa-linkedin-in"></i>
+                                    {% elif provider.id == 'microsoft' %}
+                                    <i class="fab fa-microsoft"></i>
+                                    {% elif provider.id == 'apple' %}
+                                    <i class="fab fa-apple"></i>
+                                    {% endif %}
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- Divider -->
+                        <div class="divider d-flex align-items-center mb-4">
+                            <hr class="flex-grow-1">
+                            <span class="px-3 text-muted small">or sign up with email</span>
+                            <hr class="flex-grow-1">
+                        </div>
+
+                        <!-- Sign Up Form -->
+                        <form method="post" action="{% url 'account_signup' %}">
+                            {% csrf_token %}
+                            
+                            {% if form.non_field_errors %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {% for error in form.non_field_errors %}
+                                {{ error }}
+                                {% endfor %}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                            {% endif %}
+
+                            <div class="mb-3">
+                                <label for="id_username" class="form-label">Username</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input type="text" name="username" id="id_username" 
+                                           class="form-control {% if form.username.errors %}is-invalid{% endif %}"
+                                           placeholder="Choose a username"
+                                           value="{{ form.username.value|default:'' }}" required>
+                                </div>
+                                {% if form.username.errors %}
+                                <div class="invalid-feedback d-block">{{ form.username.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="id_email" class="form-label">Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    <input type="email" name="email" id="id_email" 
+                                           class="form-control {% if form.email.errors %}is-invalid{% endif %}"
+                                           placeholder="Enter your email"
+                                           value="{{ form.email.value|default:'' }}">
+                                </div>
+                                {% if form.email.errors %}
+                                <div class="invalid-feedback d-block">{{ form.email.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="id_password1" class="form-label">Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    <input type="password" name="password1" id="id_password1" 
+                                           class="form-control {% if form.password1.errors %}is-invalid{% endif %}"
+                                           placeholder="Create a password" required>
+                                </div>
+                                {% if form.password1.errors %}
+                                <div class="invalid-feedback d-block">{{ form.password1.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="id_password2" class="form-label">Confirm Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    <input type="password" name="password2" id="id_password2" 
+                                           class="form-control {% if form.password2.errors %}is-invalid{% endif %}"
+                                           placeholder="Confirm your password" required>
+                                </div>
+                                {% if form.password2.errors %}
+                                <div class="invalid-feedback d-block">{{ form.password2.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 py-2 mb-3">
+                                <i class="fas fa-user-plus me-2"></i>Create Account
+                            </button>
+                        </form>
+
+                        <!-- Sign In Link -->
+                        <p class="text-center text-muted mb-0">
+                            Already have an account? 
+                            <a href="{% url 'account_login' %}" class="text-orange fw-semibold">Sign In</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/pages/auth.css' %}" rel="stylesheet">
+{% endblock %}

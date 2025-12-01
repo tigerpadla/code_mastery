@@ -1,0 +1,199 @@
+/*--------------------------------------------------------------
+# Authentication Pages Styles
+--------------------------------------------------------------*/
+
+.auth-section {
+    background: linear-gradient(135deg, var(--carbon-black) 0%, var(--carbon-light) 100%);
+}
+
+.auth-card {
+    background-color: var(--carbon-light);
+    border: 1px solid var(--charcoal);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+}
+
+.auth-card .card-body {
+    position: relative;
+}
+
+/*--------------------------------------------------------------
+# Social Login Buttons
+--------------------------------------------------------------*/
+.social-login .btn-social {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    transition: all 0.3s ease;
+    border: 1px solid var(--charcoal);
+    background-color: var(--carbon-black);
+    color: var(--platinum);
+}
+
+.social-login .btn-social:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Google */
+.btn-google:hover {
+    background-color: #db4437;
+    border-color: #db4437;
+    color: white;
+}
+
+/* GitHub */
+.btn-github:hover {
+    background-color: #333;
+    border-color: #333;
+    color: white;
+}
+
+/*--------------------------------------------------------------
+# Divider
+--------------------------------------------------------------*/
+.divider hr {
+    border-color: var(--charcoal);
+    opacity: 1;
+}
+
+/*--------------------------------------------------------------
+# Form Styling
+--------------------------------------------------------------*/
+.auth-card .form-label {
+    color: var(--platinum);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.auth-card .input-group-text {
+    background-color: var(--carbon-black);
+    border-color: var(--charcoal);
+    color: var(--text-muted);
+}
+
+.auth-card .form-control {
+    background-color: var(--carbon-black);
+    border-color: var(--charcoal);
+    color: var(--platinum);
+}
+
+.auth-card .form-control:focus {
+    background-color: var(--carbon-black);
+    border-color: var(--blaze-orange);
+    color: var(--platinum);
+    box-shadow: 0 0 0 0.2rem rgba(255, 100, 0, 0.15);
+}
+
+.auth-card .form-control::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+.auth-card .form-check-input {
+    background-color: var(--carbon-black);
+    border-color: var(--charcoal);
+}
+
+.auth-card .form-check-input:checked {
+    background-color: var(--blaze-orange);
+    border-color: var(--blaze-orange);
+}
+
+.auth-card .form-check-label {
+    color: var(--text-muted);
+}
+
+/*--------------------------------------------------------------
+# Alert Styling
+--------------------------------------------------------------*/
+.auth-card .alert-danger {
+    background-color: rgba(220, 38, 38, 0.1);
+    border-color: var(--primary-scarlet);
+    color: var(--primary-scarlet);
+}
+
+.auth-card .alert .btn-close {
+    filter: invert(1);
+}
+
+/*--------------------------------------------------------------
+# Invalid Feedback
+--------------------------------------------------------------*/
+.auth-card .invalid-feedback {
+    color: var(--primary-scarlet);
+    font-size: 0.85rem;
+}
+
+.auth-card .is-invalid {
+    border-color: var(--primary-scarlet) !important;
+}
+
+/*--------------------------------------------------------------
+# Buttons
+--------------------------------------------------------------*/
+.auth-card .btn-primary {
+    background-color: var(--blaze-orange);
+    border-color: var(--blaze-orange);
+    font-weight: 600;
+}
+
+.auth-card .btn-primary:hover {
+    background-color: var(--orange-hover);
+    border-color: var(--orange-hover);
+}
+
+.auth-card .btn-primary:active,
+.auth-card .btn-primary:focus {
+    background-color: var(--orange-dark) !important;
+    border-color: var(--orange-dark) !important;
+    box-shadow: none !important;
+}
+
+.auth-card .btn-outline-secondary {
+    border-color: var(--charcoal);
+    color: var(--platinum);
+}
+
+.auth-card .btn-outline-secondary:hover {
+    background-color: var(--charcoal);
+    border-color: var(--charcoal);
+    color: var(--platinum);
+}
+
+/*--------------------------------------------------------------
+# Logout Icon Animation
+--------------------------------------------------------------*/
+.logout-icon {
+    animation: fadeInDown 0.5s ease;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/*--------------------------------------------------------------
+# Responsive
+--------------------------------------------------------------*/
+@media (max-width: 576px) {
+    .auth-card .card-body {
+        padding: 1.5rem !important;
+    }
+    
+    .social-login .btn-social {
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+    }
+}
