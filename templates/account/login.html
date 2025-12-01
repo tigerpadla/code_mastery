@@ -14,7 +14,7 @@
                         <!-- Header -->
                         <div class="text-center mb-4">
                             <a href="{% url 'home' %}" class="d-inline-block mb-3">
-                                <img src="{% static 'images/logo.png' %}" alt="Code Mastery" height="50">
+                                <img src="{% static 'images/logo.png' %}" alt="Code Mastery" height="80">
                             </a>
                             <h2 class="fw-bold text-orange mb-2">Welcome Back!</h2>
                             <p class="text-muted">Sign in to continue your learning journey</p>
@@ -33,12 +33,6 @@
                                     <i class="fab fa-google"></i>
                                     {% elif provider.id == 'github' %}
                                     <i class="fab fa-github"></i>
-                                    {% elif provider.id == 'linkedin_oauth2' %}
-                                    <i class="fab fa-linkedin-in"></i>
-                                    {% elif provider.id == 'microsoft' %}
-                                    <i class="fab fa-microsoft"></i>
-                                    {% elif provider.id == 'apple' %}
-                                    <i class="fab fa-apple"></i>
                                     {% endif %}
                                 </a>
                                 {% endfor %}

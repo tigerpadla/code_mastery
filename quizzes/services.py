@@ -4,9 +4,12 @@ AI Quiz Generation Service using GitHub Models API.
 
 import os
 import json
+import logging
 import urllib.request
 import urllib.error
 from typing import Optional
+
+logger = logging.getLogger(__name__)
 
 
 class QuizGeneratorService:
@@ -164,16 +167,16 @@ class QuizGeneratorService:
                 content = result["choices"][0]["message"]["content"]
                 return self._parse_response(content)
         except urllib.error.HTTPError as e:
-            print(f"API Error: {e.code} - {e.reason}")
+            logger.error(f"API Error: {e.code} - {e.reason}")
             return None
         except urllib.error.URLError as e:
-            print(f"Connection Error: {e.reason}")
+            logger.error(f"Connection Error: {e.reason}")
             return None
         except json.JSONDecodeError as e:
-            print(f"JSON Parse Error: {e}")
+            logger.error(f"JSON Parse Error: {e}")
             return None
         except Exception as e:
-            print(f"Unexpected Error: {e}")
+            logger.error(f"Unexpected Error: {e}")
             return None
 
     def _build_prompt(
@@ -226,11 +229,11 @@ Requirements:
 
             # Validate structure
             if "title" not in quiz_data or "questions" not in quiz_data:
-                print("Invalid quiz structure: missing title or questions")
+                logger.warning("Invalid quiz structure: missing title or questions")
                 return None
 
             if not isinstance(quiz_data["questions"], list):
-                print("Invalid quiz structure: questions is not a list")
+                logger.warning("Invalid quiz structure: questions is not a list")
                 return None
 
             # Validate each question
@@ -245,17 +248,17 @@ Requirements:
                 ]
                 for field in required_fields:
                     if field not in q:
-                        print(f"Question {i + 1} missing field: {field}")
+                        logger.warning(f"Question {i + 1} missing field: {field}")
                         return None
 
                 # Normalize correct_answer to uppercase
                 q["correct_answer"] = q["correct_answer"].upper()
                 if q["correct_answer"] not in ["A", "B", "C", "D"]:
-                    print(f"Question {i + 1} has invalid correct_answer")
+                    logger.warning(f"Question {i + 1} has invalid correct_answer")
                     return None
 
             return quiz_data
 
         except json.JSONDecodeError as e:
-            print(f"Failed to parse quiz JSON: {e}")
+            logger.error(f"Failed to parse quiz JSON: {e}")
             return None
