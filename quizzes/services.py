@@ -204,7 +204,8 @@ Return ONLY valid JSON in this exact format (no markdown, no code blocks):
 Requirements:
 - Questions should test practical programming knowledge
 - Options should be plausible (avoid obviously wrong answers)
-- Include code snippets in questions when appropriate
+- When including code in questions or options, wrap it in backticks like `code here`
+- For multi-line code, use triple backticks like ```code here```
 - Explanations should be educational and concise
 - Difficulty: {difficulty} (easy=beginner concepts, medium=intermediate, hard=advanced)"""
 

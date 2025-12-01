@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load quiz_filters %}
 
 {% block title %}Results - {{ quiz.title }}{% endblock %}
 
@@ -53,14 +54,14 @@
                         {% endif %}
                     </div>
                     <div class="card-body">
-                        <p class="question-text mb-4">{{ result.question.text }}</p>
+                        <p class="question-text mb-4">{{ result.question.text|render_code }}</p>
                         
                         <div class="options">
                             {% with q=result.question %}
                             <!-- Option A -->
                             <div class="result-option mb-2 {% if q.correct_answer == 'A' %}correct-answer{% endif %} {% if result.user_answer == 'A' and not result.is_correct %}wrong-answer{% endif %}">
                                 <span class="option-letter {% if q.correct_answer == 'A' %}bg-success{% elif result.user_answer == 'A' %}bg-danger{% endif %}">A</span>
-                                {{ q.option_a }}
+                                {{ q.option_a|render_code }}
                                 {% if q.correct_answer == 'A' %}
                                 <i class="fas fa-check-circle text-success ms-auto"></i>
                                 {% elif result.user_answer == 'A' %}
@@ -70,7 +71,7 @@
                             <!-- Option B -->
                             <div class="result-option mb-2 {% if q.correct_answer == 'B' %}correct-answer{% endif %} {% if result.user_answer == 'B' and not result.is_correct %}wrong-answer{% endif %}">
                                 <span class="option-letter {% if q.correct_answer == 'B' %}bg-success{% elif result.user_answer == 'B' %}bg-danger{% endif %}">B</span>
-                                {{ q.option_b }}
+                                {{ q.option_b|render_code }}
                                 {% if q.correct_answer == 'B' %}
                                 <i class="fas fa-check-circle text-success ms-auto"></i>
                                 {% elif result.user_answer == 'B' %}
@@ -80,7 +81,7 @@
                             <!-- Option C -->
                             <div class="result-option mb-2 {% if q.correct_answer == 'C' %}correct-answer{% endif %} {% if result.user_answer == 'C' and not result.is_correct %}wrong-answer{% endif %}">
                                 <span class="option-letter {% if q.correct_answer == 'C' %}bg-success{% elif result.user_answer == 'C' %}bg-danger{% endif %}">C</span>
-                                {{ q.option_c }}
+                                {{ q.option_c|render_code }}
                                 {% if q.correct_answer == 'C' %}
                                 <i class="fas fa-check-circle text-success ms-auto"></i>
                                 {% elif result.user_answer == 'C' %}
@@ -90,7 +91,7 @@
                             <!-- Option D -->
                             <div class="result-option mb-2 {% if q.correct_answer == 'D' %}correct-answer{% endif %} {% if result.user_answer == 'D' and not result.is_correct %}wrong-answer{% endif %}">
                                 <span class="option-letter {% if q.correct_answer == 'D' %}bg-success{% elif result.user_answer == 'D' %}bg-danger{% endif %}">D</span>
-                                {{ q.option_d }}
+                                {{ q.option_d|render_code }}
                                 {% if q.correct_answer == 'D' %}
                                 <i class="fas fa-check-circle text-success ms-auto"></i>
                                 {% elif result.user_answer == 'D' %}
@@ -103,7 +104,7 @@
                         {% if result.question.explanation %}
                         <div class="explanation mt-3 p-3">
                             <strong><i class="fas fa-lightbulb text-warning me-2"></i>Explanation:</strong>
-                            <p class="mb-0 mt-2">{{ result.question.explanation }}</p>
+                            <p class="mb-0 mt-2">{{ result.question.explanation|render_code }}</p>
                         </div>
                         {% endif %}
                     </div>

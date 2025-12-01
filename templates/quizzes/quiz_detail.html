@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load quiz_filters %}
 
 {% block title %}{{ quiz.title }}{% endblock %}
 
@@ -60,7 +61,7 @@
                             <span class="question-number">Question {{ forloop.counter }}</span>
                         </div>
                         <div class="card-body">
-                            <p class="question-text mb-4">{{ question.text }}</p>
+                            <p class="question-text mb-4">{{ question.text|render_code }}</p>
                             
                             <div class="options">
                                 <div class="form-check option-item mb-3">
@@ -70,7 +71,7 @@
                                            value="A">
                                     <label class="form-check-label" for="q{{ question.id }}_a">
                                         <span class="option-letter">A</span>
-                                        {{ question.option_a }}
+                                        {{ question.option_a|render_code }}
                                     </label>
                                 </div>
                                 <div class="form-check option-item mb-3">
@@ -80,7 +81,7 @@
                                            value="B">
                                     <label class="form-check-label" for="q{{ question.id }}_b">
                                         <span class="option-letter">B</span>
-                                        {{ question.option_b }}
+                                        {{ question.option_b|render_code }}
                                     </label>
                                 </div>
                                 <div class="form-check option-item mb-3">
@@ -90,7 +91,7 @@
                                            value="C">
                                     <label class="form-check-label" for="q{{ question.id }}_c">
                                         <span class="option-letter">C</span>
-                                        {{ question.option_c }}
+                                        {{ question.option_c|render_code }}
                                     </label>
                                 </div>
                                 <div class="form-check option-item mb-3">
@@ -100,7 +101,7 @@
                                            value="D">
                                     <label class="form-check-label" for="q{{ question.id }}_d">
                                         <span class="option-letter">D</span>
-                                        {{ question.option_d }}
+                                        {{ question.option_d|render_code }}
                                     </label>
                                 </div>
                             </div>
