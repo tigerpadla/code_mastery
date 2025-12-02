@@ -93,6 +93,9 @@ def quiz_detail(request, slug):
 
 def quiz_submit(request, slug):
     """Handle quiz submission and show results."""
+    from .models import QuizAttempt
+    from django.utils import timezone
+    
     quiz = get_object_or_404(Quiz, slug=slug)
     
     if request.method != 'POST':
@@ -101,12 +104,16 @@ def quiz_submit(request, slug):
     questions = quiz.questions.all()
     results = []
     correct_count = 0
+    answers_dict = {}
     
     for question in questions:
         user_answer = request.POST.get(f'question_{question.id}', '')
         is_correct = user_answer == question.correct_answer
         if is_correct:
             correct_count += 1
+        
+        # Store answer for QuizAttempt
+        answers_dict[str(question.id)] = user_answer
         
         results.append({
             'question': question,
@@ -115,6 +122,17 @@ def quiz_submit(request, slug):
         })
     
     score_percentage = (correct_count / len(questions) * 100) if questions else 0
+    
+    # Save quiz attempt for logged-in users
+    if request.user.is_authenticated:
+        QuizAttempt.objects.create(
+            quiz=quiz,
+            user=request.user,
+            score=correct_count,
+            total_questions=len(questions),
+            answers=answers_dict,
+            completed_at=timezone.now(),
+        )
     
     context = {
         'quiz': quiz,

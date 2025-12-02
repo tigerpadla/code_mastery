@@ -53,11 +53,11 @@
                                 <div class="stat-label text-muted">Quizzes Saved</div>
                             </div>
                             <div class="col-6 col-md-3 text-center">
-                                <div class="stat-value text-orange">-</div>
+                                <div class="stat-value text-orange">{{ total_attempts }}</div>
                                 <div class="stat-label text-muted">Quizzes Taken</div>
                             </div>
                             <div class="col-6 col-md-3 text-center">
-                                <div class="stat-value text-orange">-</div>
+                                <div class="stat-value text-orange">{% if total_attempts > 0 %}{{ avg_percentage }}%{% else %}-{% endif %}</div>
                                 <div class="stat-label text-muted">Avg. Score</div>
                             </div>
                         </div>

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.db.models import Avg
 from .models import Profile
 
 
@@ -20,6 +21,22 @@ def profile_view(request, username=None):
     # Check if viewing own profile
     is_own_profile = request.user == user
     
+    # Calculate quiz attempt stats
+    quiz_attempts = user.quiz_attempts.all()
+    total_attempts = quiz_attempts.count()
+    
+    # Calculate average score percentage
+    if total_attempts > 0:
+        avg_score = quiz_attempts.aggregate(
+            avg=Avg('score') 
+        )['avg'] or 0
+        avg_total = quiz_attempts.aggregate(
+            avg=Avg('total_questions')
+        )['avg'] or 1
+        avg_percentage = round((avg_score / avg_total) * 100) if avg_total > 0 else 0
+    else:
+        avg_percentage = 0
+    
     context = {
         'profile_user': user,
         'profile': profile,
@@ -28,6 +45,8 @@ def profile_view(request, username=None):
         'is_own_profile': is_own_profile,
         'total_created': user.created_quizzes.filter(is_public=True).count(),
         'total_saved': profile.saved_quizzes.count(),
+        'total_attempts': total_attempts,
+        'avg_percentage': avg_percentage,
     }
     return render(request, 'account/profile.html', context)
 
