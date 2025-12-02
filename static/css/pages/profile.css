@@ -181,6 +181,21 @@
 }
 
 /*--------------------------------------------------------------
+# Back/Cancel Buttons
+--------------------------------------------------------------*/
+.profile-edit-card .btn-outline-secondary {
+    background-color: transparent;
+    border: 2px solid var(--platinum);
+    color: var(--platinum);
+}
+
+.profile-edit-card .btn-outline-secondary:hover {
+    background-color: var(--platinum);
+    border-color: var(--platinum);
+    color: var(--carbon-black);
+}
+
+/*--------------------------------------------------------------
 # Responsive
 --------------------------------------------------------------*/
 @media (max-width: 768px) {
