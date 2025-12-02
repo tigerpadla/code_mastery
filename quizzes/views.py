@@ -48,7 +48,6 @@ def quiz_generate(request):
                     description=quiz_data.get('description', ''),
                     creator=request.user if request.user.is_authenticated else None,
                     is_ai_generated=True,
-                    is_public=True,
                 )
                 
                 for i, q_data in enumerate(quiz_data['questions']):
