@@ -8,9 +8,7 @@ from .services import QuizGeneratorService
 
 def home(request):
     """Homepage view with featured quizzes."""
-    featured_quizzes = Quiz.objects.filter(
-        is_public=True
-    ).order_by('-created_at')[:6]
+    featured_quizzes = Quiz.objects.all().order_by('-created_at')[:6]
     
     context = {
         'featured_quizzes': featured_quizzes,

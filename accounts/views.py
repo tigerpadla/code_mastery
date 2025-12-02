@@ -15,7 +15,7 @@ def profile_view(request, username=None):
         user = request.user
     
     profile = user.profile
-    created_quizzes = user.created_quizzes.filter(is_public=True).order_by('-created_at')[:6]
+    created_quizzes = user.created_quizzes.all().order_by('-created_at')[:6]
     saved_quizzes = profile.saved_quizzes.all().order_by('-created_at')[:6]
     
     # Check if viewing own profile
@@ -43,7 +43,7 @@ def profile_view(request, username=None):
         'created_quizzes': created_quizzes,
         'saved_quizzes': saved_quizzes,
         'is_own_profile': is_own_profile,
-        'total_created': user.created_quizzes.filter(is_public=True).count(),
+        'total_created': user.created_quizzes.count(),
         'total_saved': profile.saved_quizzes.count(),
         'total_attempts': total_attempts,
         'avg_percentage': avg_percentage,

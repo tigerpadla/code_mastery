@@ -7,7 +7,7 @@ class QuizForm(forms.ModelForm):
     
     class Meta:
         model = Quiz
-        fields = ['title', 'description', 'is_public']
+        fields = ['title', 'description']
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -19,14 +19,10 @@ class QuizForm(forms.ModelForm):
                 'placeholder': 'Enter a brief description of your quiz (optional)...',
                 'rows': 3,
             }),
-            'is_public': forms.CheckboxInput(attrs={
-                'class': 'form-check-input',
-            }),
         }
         labels = {
             'title': 'Quiz Title',
             'description': 'Description',
-            'is_public': 'Make this quiz public',
         }
 
 
