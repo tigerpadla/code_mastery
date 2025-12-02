@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ profile_user.username }}'s Profile - Code Mastery{% endblock %}
+
+{% block content %}
+<section class="profile-section py-5">
+    <div class="container">
+        <!-- Profile Header -->
+        <div class="row mb-5">
+            <div class="col-lg-10 mx-auto">
+                <div class="profile-header card">
+                    <div class="card-body p-4 p-md-5">
+                        <div class="row align-items-center">
+                            <div class="col-md-auto text-center text-md-start mb-4 mb-md-0">
+                                <div class="profile-avatar-wrapper">
+                                    <img src="{{ profile.get_avatar_url }}" 
+                                         alt="{{ profile_user.username }}" 
+                                         class="profile-avatar">
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center align-items-md-start">
+                                    <div class="text-center text-md-start mb-3 mb-md-0">
+                                        <h1 class="fw-bold mb-1">{{ profile_user.username }}</h1>
+                                        <p class="text-muted mb-2">
+                                            <i class="fas fa-calendar-alt me-1"></i>
+                                            Joined {{ profile_user.date_joined|date:"F Y" }}
+                                        </p>
+                                        {% if profile.bio %}
+                                        <p class="profile-bio mb-0">{{ profile.bio }}</p>
+                                        {% else %}
+                                        <p class="text-muted fst-italic mb-0">No bio yet.</p>
+                                        {% endif %}
+                                    </div>
+                                    {% if is_own_profile %}
+                                    <a href="{% url 'accounts:profile_edit' %}" class="btn btn-outline-primary">
+                                        <i class="fas fa-edit me-2"></i>Edit Profile
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Stats -->
+                        <div class="row mt-4 pt-4 border-top border-secondary">
+                            <div class="col-6 col-md-3 text-center mb-3 mb-md-0">
+                                <div class="stat-value text-orange">{{ total_created }}</div>
+                                <div class="stat-label text-muted">Quizzes Created</div>
+                            </div>
+                            <div class="col-6 col-md-3 text-center mb-3 mb-md-0">
+                                <div class="stat-value text-orange">{{ total_saved }}</div>
+                                <div class="stat-label text-muted">Quizzes Saved</div>
+                            </div>
+                            <div class="col-6 col-md-3 text-center">
+                                <div class="stat-value text-orange">-</div>
+                                <div class="stat-label text-muted">Quizzes Taken</div>
+                            </div>
+                            <div class="col-6 col-md-3 text-center">
+                                <div class="stat-value text-orange">-</div>
+                                <div class="stat-label text-muted">Avg. Score</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Created Quizzes -->
+        <div class="row mb-5">
+            <div class="col-lg-10 mx-auto">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold mb-0">
+                        <i class="fas fa-pen-fancy text-orange me-2"></i>
+                        {% if is_own_profile %}My Quizzes{% else %}{{ profile_user.username }}'s Quizzes{% endif %}
+                    </h2>
+                </div>
+                
+                {% if created_quizzes %}
+                <div class="row g-4">
+                    {% for quiz in created_quizzes %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card quiz-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    {% if quiz.is_ai_generated %}
+                                    <span class="badge bg-warning text-dark">
+                                        <i class="fas fa-robot me-1"></i>AI
+                                    </span>
+                                    {% else %}
+                                    <span class="badge bg-charcoal">
+                                        <i class="fas fa-pen me-1"></i>Manual
+                                    </span>
+                                    {% endif %}
+                                    <small class="text-muted">{{ quiz.questions.count }} Qs</small>
+                                </div>
+                                <h5 class="card-title fw-bold text-orange">{{ quiz.title }}</h5>
+                                <p class="card-text text-muted small">
+                                    {{ quiz.description|truncatewords:15 }}
+                                </p>
+                            </div>
+                            <div class="card-footer bg-transparent border-top-0">
+                                <a href="{% url 'quizzes:detail' slug=quiz.slug %}" class="btn btn-sm btn-primary w-100">
+                                    <i class="fas fa-play me-1"></i>Take Quiz
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">No quizzes created yet.</p>
+                    {% if is_own_profile %}
+                    <a href="{% url 'home' %}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Create Your First Quiz
+                    </a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Saved Quizzes (Only show on own profile) -->
+        {% if is_own_profile %}
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold mb-0">
+                        <i class="fas fa-bookmark text-orange me-2"></i>Saved Quizzes
+                    </h2>
+                </div>
+                
+                {% if saved_quizzes %}
+                <div class="row g-4">
+                    {% for quiz in saved_quizzes %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card quiz-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    {% if quiz.is_ai_generated %}
+                                    <span class="badge bg-warning text-dark">
+                                        <i class="fas fa-robot me-1"></i>AI
+                                    </span>
+                                    {% else %}
+                                    <span class="badge bg-charcoal">
+                                        <i class="fas fa-pen me-1"></i>Manual
+                                    </span>
+                                    {% endif %}
+                                    <button class="btn btn-sm btn-link text-danger p-0 unsave-btn"
+                                            onclick="window.location.href='{% url 'accounts:save_quiz' quiz_id=quiz.id %}'"
+                                            title="Remove from saved">
+                                        <i class="fas fa-bookmark"></i>
+                                    </button>
+                                </div>
+                                <h5 class="card-title fw-bold text-orange">{{ quiz.title }}</h5>
+                                <p class="card-text text-muted small">
+                                    {{ quiz.description|truncatewords:15 }}
+                                </p>
+                                <small class="text-muted">
+                                    <i class="fas fa-user me-1"></i>{{ quiz.creator.username|default:"Anonymous" }}
+                                </small>
+                            </div>
+                            <div class="card-footer bg-transparent border-top-0">
+                                <a href="{% url 'quizzes:detail' slug=quiz.slug %}" class="btn btn-sm btn-primary w-100">
+                                    <i class="fas fa-play me-1"></i>Take Quiz
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-bookmark fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">No saved quizzes yet.</p>
+                    <a href="{% url 'home' %}" class="btn btn-outline-primary">
+                        <i class="fas fa-search me-2"></i>Browse Quizzes
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/pages/profile.css' %}" rel="stylesheet">
+{% endblock %}

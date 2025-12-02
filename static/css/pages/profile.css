@@ -1,0 +1,200 @@
+/*--------------------------------------------------------------
+# Profile Page Styles
+--------------------------------------------------------------*/
+
+.profile-section {
+    min-height: calc(100vh - 200px);
+}
+
+/*--------------------------------------------------------------
+# Profile Header Card
+--------------------------------------------------------------*/
+.profile-header {
+    background-color: var(--carbon-light);
+    border: 1px solid var(--charcoal);
+}
+
+.profile-header:hover {
+    transform: none;
+    border-color: var(--charcoal);
+}
+
+.profile-avatar-wrapper {
+    position: relative;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--blaze-orange);
+    background-color: var(--carbon-black);
+}
+
+.profile-bio {
+    max-width: 500px;
+    color: var(--platinum);
+}
+
+/*--------------------------------------------------------------
+# Profile Stats
+--------------------------------------------------------------*/
+.stat-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+}
+
+/*--------------------------------------------------------------
+# Quiz Cards in Profile
+--------------------------------------------------------------*/
+.quiz-card {
+    background-color: var(--carbon-light);
+    border: 1px solid var(--charcoal);
+    transition: all 0.3s ease;
+}
+
+.quiz-card:hover {
+    border-color: var(--blaze-orange);
+    transform: translateY(-3px);
+}
+
+.quiz-card .card-title {
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.unsave-btn {
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.unsave-btn:hover {
+    opacity: 1;
+}
+
+/*--------------------------------------------------------------
+# Profile Edit Page
+--------------------------------------------------------------*/
+.profile-edit-card {
+    background-color: var(--carbon-light);
+    border: 1px solid var(--charcoal);
+}
+
+.profile-edit-card:hover {
+    transform: none;
+    border-color: var(--charcoal);
+}
+
+/*--------------------------------------------------------------
+# Avatar Selection
+--------------------------------------------------------------*/
+.avatar-option {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.avatar-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.avatar-option:hover .avatar-label {
+    border-color: var(--charcoal);
+}
+
+.avatar-option.selected .avatar-label {
+    border-color: var(--blaze-orange);
+    background-color: rgba(255, 100, 0, 0.1);
+}
+
+.avatar-preview {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: var(--carbon-black);
+    margin-bottom: 0.5rem;
+}
+
+.custom-upload-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed var(--charcoal);
+    color: var(--text-muted);
+    font-size: 1.5rem;
+}
+
+.avatar-name {
+    font-size: 0.875rem;
+    color: var(--platinum);
+    font-weight: 500;
+}
+
+/*--------------------------------------------------------------
+# Form Styling
+--------------------------------------------------------------*/
+.profile-edit-card .form-control {
+    background-color: var(--carbon-black);
+    border-color: var(--charcoal);
+    color: var(--platinum);
+}
+
+.profile-edit-card .form-control:focus {
+    background-color: var(--carbon-black);
+    border-color: var(--blaze-orange);
+    color: var(--platinum);
+    box-shadow: 0 0 0 0.2rem rgba(255, 100, 0, 0.15);
+}
+
+.profile-edit-card .form-control::placeholder {
+    color: var(--text-muted);
+}
+
+.profile-edit-card .form-text {
+    color: var(--text-muted);
+}
+
+.profile-edit-card .form-label {
+    color: var(--platinum);
+}
+
+/*--------------------------------------------------------------
+# Custom Upload Section
+--------------------------------------------------------------*/
+.custom-upload-section {
+    padding: 1rem;
+    background-color: var(--carbon-black);
+    border-radius: 8px;
+    border: 1px solid var(--charcoal);
+}
+
+/*--------------------------------------------------------------
+# Responsive
+--------------------------------------------------------------*/
+@media (max-width: 768px) {
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .stat-value {
+        font-size: 1.5rem;
+    }
+    
+    .avatar-preview {
+        width: 70px;
+        height: 70px;
+    }
+}

@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edit Profile - Code Mastery{% endblock %}
+
+{% block content %}
+<section class="profile-edit-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card profile-edit-card">
+                    <div class="card-body p-4 p-md-5">
+                        <!-- Header -->
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2 class="fw-bold mb-0">
+                                <i class="fas fa-user-edit text-orange me-2"></i>Edit Profile
+                            </h2>
+                            <a href="{% url 'accounts:profile' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back
+                            </a>
+                        </div>
+
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            <!-- Avatar Section -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Profile Avatar</label>
+                                <div class="avatar-selection">
+                                    <div class="row g-3">
+                                        <!-- Male Avatar -->
+                                        <div class="col-auto">
+                                            <div class="avatar-option {% if profile.avatar == 'male' %}selected{% endif %}">
+                                                <input type="radio" name="avatar" value="male" 
+                                                       id="avatar-male" class="d-none"
+                                                       {% if profile.avatar == 'male' %}checked{% endif %}>
+                                                <label for="avatar-male" class="avatar-label">
+                                                    <img src="{% static 'images/user-male-icon.png' %}" 
+                                                         alt="Male Avatar" class="avatar-preview">
+                                                    <span class="avatar-name">Male</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Female Avatar -->
+                                        <div class="col-auto">
+                                            <div class="avatar-option {% if profile.avatar == 'female' %}selected{% endif %}">
+                                                <input type="radio" name="avatar" value="female" 
+                                                       id="avatar-female" class="d-none"
+                                                       {% if profile.avatar == 'female' %}checked{% endif %}>
+                                                <label for="avatar-female" class="avatar-label">
+                                                    <img src="{% static 'images/user-female-icon.png' %}" 
+                                                         alt="Female Avatar" class="avatar-preview">
+                                                    <span class="avatar-name">Female</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Custom Avatar -->
+                                        <div class="col-auto">
+                                            <div class="avatar-option {% if profile.avatar == 'custom' %}selected{% endif %}">
+                                                <input type="radio" name="avatar" value="custom" 
+                                                       id="avatar-custom" class="d-none"
+                                                       {% if profile.avatar == 'custom' %}checked{% endif %}>
+                                                <label for="avatar-custom" class="avatar-label">
+                                                    {% if profile.custom_avatar %}
+                                                    <img src="{{ profile.custom_avatar.url }}" 
+                                                         alt="Custom Avatar" class="avatar-preview" id="custom-preview">
+                                                    {% else %}
+                                                    <div class="avatar-preview custom-upload-placeholder" id="custom-preview">
+                                                        <i class="fas fa-camera"></i>
+                                                    </div>
+                                                    {% endif %}
+                                                    <span class="avatar-name">Custom</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Custom Upload -->
+                                <div class="custom-upload-section mt-3" id="custom-upload-section">
+                                    <label for="custom_avatar" class="form-label small text-muted">
+                                        Upload your own avatar (max 2MB, JPG/PNG)
+                                    </label>
+                                    <input type="file" name="custom_avatar" id="custom_avatar" 
+                                           class="form-control" accept="image/jpeg,image/png,image/webp">
+                                </div>
+                            </div>
+
+                            <!-- Bio Section -->
+                            <div class="mb-4">
+                                <label for="bio" class="form-label fw-semibold">Bio</label>
+                                <textarea name="bio" id="bio" class="form-control" rows="4" 
+                                          maxlength="500" 
+                                          placeholder="Tell us a bit about yourself...">{{ profile.bio }}</textarea>
+                                <div class="form-text">
+                                    <span id="bio-count">{{ profile.bio|length }}</span>/500 characters
+                                </div>
+                            </div>
+
+                            <!-- Submit -->
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a href="{% url 'accounts:profile' %}" class="btn btn-outline-secondary me-md-2">
+                                    Cancel
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/pages/profile.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Avatar selection
+    const avatarOptions = document.querySelectorAll('.avatar-option');
+    avatarOptions.forEach(option => {
+        const radio = option.querySelector('input[type="radio"]');
+        const label = option.querySelector('.avatar-label');
+        
+        label.addEventListener('click', function() {
+            avatarOptions.forEach(opt => opt.classList.remove('selected'));
+            option.classList.add('selected');
+        });
+    });
+    
+    // Bio character count
+    const bioTextarea = document.getElementById('bio');
+    const bioCount = document.getElementById('bio-count');
+    
+    bioTextarea.addEventListener('input', function() {
+        bioCount.textContent = this.value.length;
+    });
+    
+    // Custom avatar preview
+    const customInput = document.getElementById('custom_avatar');
+    const customPreview = document.getElementById('custom-preview');
+    const customRadio = document.getElementById('avatar-custom');
+    
+    customInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Select the custom avatar option
+                customRadio.checked = true;
+                document.querySelectorAll('.avatar-option').forEach(opt => opt.classList.remove('selected'));
+                customRadio.closest('.avatar-option').classList.add('selected');
+                
+                // Update preview
+                if (customPreview.tagName === 'IMG') {
+                    customPreview.src = e.target.result;
+                } else {
+                    // Replace placeholder with image
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = 'Custom Avatar';
+                    img.className = 'avatar-preview';
+                    img.id = 'custom-preview';
+                    customPreview.parentNode.replaceChild(img, customPreview);
+                }
+            };
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+});
+</script>
+{% endblock %}
