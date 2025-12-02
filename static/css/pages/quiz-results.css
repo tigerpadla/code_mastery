@@ -229,3 +229,12 @@
     border-color: var(--blaze-orange) !important;
     color: white !important;
 }
+
+/*--------------------------------------------------------------
+# Header Action Buttons (smaller save/share)
+--------------------------------------------------------------*/
+.btn-sm.save-quiz-btn,
+.btn-sm.btn-share {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.875rem;
+}

@@ -29,6 +29,27 @@
                     You got <strong>{{ correct_count }}</strong> out of <strong>{{ total_questions }}</strong> questions correct
                     on <strong>{{ quiz.title }}</strong>
                 </p>
+                
+                <!-- Save & Share Buttons -->
+                <div class="d-flex justify-content-center gap-2 mt-4">
+                    {% if user.is_authenticated %}
+                    <button type="button" 
+                            class="btn btn-sm save-quiz-btn {% if quiz in user.profile.saved_quizzes.all %}saved{% endif %}"
+                            data-quiz-id="{{ quiz.id }}"
+                            data-csrf-token="{{ csrf_token }}"
+                            data-saved="{% if quiz in user.profile.saved_quizzes.all %}true{% else %}false{% endif %}"
+                            title="{% if quiz in user.profile.saved_quizzes.all %}Remove from saved{% else %}Save quiz{% endif %}">
+                        <i class="{% if quiz in user.profile.saved_quizzes.all %}fas{% else %}far{% endif %} fa-bookmark me-1"></i>
+                        <span class="btn-text">{% if quiz in user.profile.saved_quizzes.all %}Saved{% else %}Save{% endif %}</span>
+                    </button>
+                    {% endif %}
+                    <button type="button" class="btn btn-sm btn-share share-btn" 
+                            data-quiz-url="{% url 'quizzes:detail' slug=quiz.slug %}"
+                            data-quiz-title="{{ quiz.title }}"
+                            title="Share this quiz">
+                        <i class="fas fa-share-alt me-1"></i>Share
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -116,28 +137,9 @@
                     <a href="{% url 'home' %}" class="btn btn-back">
                         <i class="fas fa-home me-2"></i>Back to Home
                     </a>
-                    <div class="d-flex gap-2">
-                        {% if user.is_authenticated %}
-                        <button type="button" 
-                                class="btn save-quiz-btn {% if quiz in user.profile.saved_quizzes.all %}saved{% endif %}"
-                                data-quiz-id="{{ quiz.id }}"
-                                data-csrf-token="{{ csrf_token }}"
-                                data-saved="{% if quiz in user.profile.saved_quizzes.all %}true{% else %}false{% endif %}"
-                                title="{% if quiz in user.profile.saved_quizzes.all %}Remove from saved{% else %}Save quiz{% endif %}">
-                            <i class="{% if quiz in user.profile.saved_quizzes.all %}fas{% else %}far{% endif %} fa-bookmark me-2"></i>
-                            <span class="btn-text">{% if quiz in user.profile.saved_quizzes.all %}Saved{% else %}Save Quiz{% endif %}</span>
-                        </button>
-                        {% endif %}
-                        <button type="button" class="btn btn-share share-btn" 
-                                data-quiz-url="{% url 'quizzes:detail' slug=quiz.slug %}"
-                                data-quiz-title="{{ quiz.title }}"
-                                title="Share this quiz">
-                            <i class="fas fa-share-alt me-2"></i>Share Quiz
-                        </button>
-                        <a href="{% url 'quizzes:detail' slug=quiz.slug %}" class="btn btn-primary">
-                            <i class="fas fa-redo me-2"></i>Try Again
-                        </a>
-                    </div>
+                    <a href="{% url 'quizzes:detail' slug=quiz.slug %}" class="btn btn-primary">
+                        <i class="fas fa-redo me-2"></i>Try Again
+                    </a>
                 </div>
             </div>
         </div>
