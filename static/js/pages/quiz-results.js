@@ -137,8 +137,3 @@ function showToast(message, type = 'success') {
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
-
-// Alias for backward compatibility
-function showShareToast(message, type = 'success') {
-    showToast(message, type);
-}

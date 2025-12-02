@@ -1,0 +1,175 @@
+/*--------------------------------------------------------------
+# Quiz Create Page Styles
+--------------------------------------------------------------*/
+
+.quiz-create-card {
+    background-color: var(--carbon-black);
+    border: none;
+}
+
+.quiz-create-card:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.quiz-create-card .card-body {
+    background-color: var(--carbon-black);
+}
+
+/*--------------------------------------------------------------
+# Section Titles
+--------------------------------------------------------------*/
+.section-title {
+    color: var(--platinum);
+    font-weight: 600;
+    border-bottom: 2px solid var(--blaze-orange);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+/*--------------------------------------------------------------
+# Form Controls
+--------------------------------------------------------------*/
+.quiz-create-card .form-control,
+.quiz-create-card .form-select {
+    background-color: var(--eerie-black);
+    border-color: var(--charcoal);
+    color: var(--platinum);
+}
+
+.quiz-create-card .form-control:focus,
+.quiz-create-card .form-select:focus {
+    background-color: var(--eerie-black);
+    border-color: var(--blaze-orange);
+    color: var(--platinum);
+    box-shadow: 0 0 0 0.2rem rgba(255, 100, 0, 0.15);
+}
+
+.quiz-create-card .form-control::placeholder {
+    color: var(--text-muted);
+}
+
+.quiz-create-card .form-label {
+    color: var(--platinum);
+    font-weight: 500;
+}
+
+.quiz-create-card .form-text {
+    color: var(--text-muted);
+}
+
+.quiz-create-card .form-check-label {
+    color: var(--platinum);
+}
+
+.quiz-create-card .form-check-input {
+    background-color: var(--eerie-black);
+    border-color: var(--charcoal);
+}
+
+.quiz-create-card .form-check-input:checked {
+    background-color: var(--blaze-orange);
+    border-color: var(--blaze-orange);
+}
+
+/*--------------------------------------------------------------
+# Question Cards
+--------------------------------------------------------------*/
+.question-form-card {
+    background-color: var(--eerie-black);
+    border: none;
+    border-left: 4px solid var(--blaze-orange);
+}
+
+.question-form-card:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.question-form-card .card-header {
+    background-color: rgba(255, 100, 0, 0.1);
+    border-bottom: none;
+    padding: 0.75rem 1rem;
+}
+
+.question-form-card .card-body {
+    background-color: var(--eerie-black);
+    padding: 1.25rem;
+}
+
+.question-number {
+    color: var(--platinum);
+    font-weight: 600;
+}
+
+/*--------------------------------------------------------------
+# Buttons
+--------------------------------------------------------------*/
+.btn-outline-orange {
+    color: var(--blaze-orange);
+    border-color: var(--blaze-orange);
+}
+
+.btn-outline-orange:hover {
+    background-color: var(--blaze-orange);
+    border-color: var(--blaze-orange);
+    color: white;
+}
+
+.btn-outline-secondary {
+    border: 2px solid var(--platinum);
+    color: var(--platinum);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--platinum);
+    border-color: var(--platinum);
+    color: var(--carbon-black);
+}
+
+.btn-outline-danger {
+    border-color: var(--primary-scarlet);
+    color: var(--primary-scarlet);
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--primary-scarlet);
+    border-color: var(--primary-scarlet);
+    color: white;
+}
+
+.delete-question {
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.delete-question:hover {
+    opacity: 1;
+}
+
+/*--------------------------------------------------------------
+# Border
+--------------------------------------------------------------*/
+.border-top {
+    border-color: var(--charcoal) !important;
+}
+
+/*--------------------------------------------------------------
+# Invalid Feedback
+--------------------------------------------------------------*/
+.invalid-feedback {
+    color: var(--primary-scarlet);
+}
+
+/*--------------------------------------------------------------
+# Responsive
+--------------------------------------------------------------*/
+@media (max-width: 768px) {
+    .question-form-card .card-body {
+        padding: 1rem;
+    }
+    
+    .quiz-create-card .card-body {
+        padding: 1.5rem !important;
+    }
+}
