@@ -13,6 +13,11 @@
     box-shadow: var(--shadow-lg);
 }
 
+.auth-card:hover {
+    transform: none;
+    border-color: var(--charcoal);
+}
+
 .auth-card .card-body {
     position: relative;
 }
