@@ -189,3 +189,52 @@
 .share-toast-error i {
     color: var(--primary-scarlet);
 }
+
+/*--------------------------------------------------------------
+# Action Buttons (Save/Share in header)
+--------------------------------------------------------------*/
+.btn-action {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: 1px solid var(--platinum);
+    color: var(--platinum);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.btn-action:hover {
+    background-color: var(--blaze-orange);
+    border-color: var(--blaze-orange);
+    color: white;
+}
+
+/* Save button saved state - high specificity */
+button.btn-action.save-quiz-btn.saved,
+button.btn-action.save-quiz-btn.saved:hover,
+button.btn-action.save-quiz-btn.saved:focus,
+button.btn-action.save-quiz-btn.saved:active,
+.btn-action.saved {
+    background-color: var(--blaze-orange) !important;
+    border-color: var(--blaze-orange) !important;
+    color: white !important;
+}
+
+/*--------------------------------------------------------------
+# Save Quiz Button (AJAX)
+--------------------------------------------------------------*/
+.save-quiz-btn.saved {
+    background-color: var(--blaze-orange) !important;
+    border-color: var(--blaze-orange) !important;
+    color: white !important;
+}
+
+.save-quiz-btn.saved:hover {
+    background-color: var(--blaze-orange) !important;
+    border-color: var(--blaze-orange) !important;
+    color: white !important;
+}

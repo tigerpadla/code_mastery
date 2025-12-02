@@ -144,22 +144,22 @@
 # Share Button
 --------------------------------------------------------------*/
 .btn-share {
-    background-color: transparent;
-    border: 1px solid var(--platinum);
-    color: var(--platinum);
+    background-color: var(--blaze-orange);
+    border: 2px solid var(--blaze-orange);
+    color: white;
 }
 
 .btn-share:hover {
-    background-color: var(--blaze-orange);
-    border-color: var(--blaze-orange);
+    background-color: #e55a00;
+    border-color: #e55a00;
     color: white;
 }
 
 .btn-share:active,
 .btn-share:focus,
 .btn-share:focus-visible {
-    background-color: var(--blaze-orange) !important;
-    border-color: var(--blaze-orange) !important;
+    background-color: #e55a00 !important;
+    border-color: #e55a00 !important;
     color: white !important;
     box-shadow: none !important;
 }
@@ -202,4 +202,30 @@
 
 .share-toast-error i {
     color: var(--primary-scarlet);
+}
+
+/*--------------------------------------------------------------
+# Save Quiz Button (AJAX)
+--------------------------------------------------------------*/
+.save-quiz-btn {
+    background-color: transparent;
+    border: 2px solid var(--blaze-orange);
+    color: white;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.save-quiz-btn:hover {
+    background-color: var(--blaze-orange);
+    border-color: var(--blaze-orange);
+    color: white;
+}
+
+.save-quiz-btn.saved,
+.save-quiz-btn.saved:hover,
+.save-quiz-btn.saved:focus,
+.save-quiz-btn.saved:active {
+    background-color: var(--blaze-orange) !important;
+    border-color: var(--blaze-orange) !important;
+    color: white !important;
 }

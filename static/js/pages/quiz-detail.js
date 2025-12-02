@@ -148,9 +148,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /**
- * Show a toast notification for share feedback
+ * Show a toast notification for share/save feedback
  */
-function showShareToast(message, type = 'success') {
+function showToast(message, type = 'success') {
     // Remove existing toast if any
     const existingToast = document.querySelector('.share-toast');
     if (existingToast) {
@@ -176,3 +176,80 @@ function showShareToast(message, type = 'success') {
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
+
+// Alias for backward compatibility
+function showShareToast(message, type = 'success') {
+    showToast(message, type);
+}
+
+/**
+ * Handle AJAX save quiz functionality
+ */
+function initSaveQuizButtons() {
+    const saveButtons = document.querySelectorAll('.save-quiz-btn');
+    
+    saveButtons.forEach(btn => {
+        btn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            
+            const quizId = this.dataset.quizId;
+            const csrfToken = this.dataset.csrfToken;
+            const isSaved = this.dataset.saved === 'true';
+            
+            try {
+                const response = await fetch(`/accounts/quiz/${quizId}/save/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrfToken,
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Update button state
+                    this.dataset.saved = data.saved ? 'true' : 'false';
+                    
+                    // Update button icon and text
+                    const icon = this.querySelector('i');
+                    const textSpan = this.querySelector('.btn-text');
+                    
+                    if (data.saved) {
+                        if (icon) {
+                            icon.className = 'fas fa-bookmark';
+                        }
+                        if (textSpan) {
+                            textSpan.textContent = 'Saved';
+                        }
+                        this.classList.add('saved');
+                    } else {
+                        if (icon) {
+                            icon.className = 'far fa-bookmark';
+                        }
+                        if (textSpan) {
+                            textSpan.textContent = 'Save Quiz';
+                        }
+                        this.classList.remove('saved');
+                    }
+                    
+                    showToast(data.message, 'success');
+                } else if (response.status === 401) {
+                    // Not authenticated - redirect to login
+                    window.location.href = '/accounts/login/?next=' + window.location.pathname;
+                } else {
+                    showToast('Failed to save quiz. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Save quiz error:', error);
+                showToast('An error occurred. Please try again.', 'error');
+            }
+        });
+    });
+}
+
+// Initialize save buttons on DOM load
+document.addEventListener('DOMContentLoaded', function() {
+    initSaveQuizButtons();
+});

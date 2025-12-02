@@ -85,17 +85,35 @@ def profile_edit(request):
 @login_required
 def save_quiz(request, quiz_id):
     """Save/unsave a quiz to user's profile."""
+    from django.http import JsonResponse
     from quizzes.models import Quiz
     
     quiz = get_object_or_404(Quiz, id=quiz_id)
     profile = request.user.profile
     
-    if quiz in profile.saved_quizzes.all():
+    is_saved = quiz in profile.saved_quizzes.all()
+    
+    if is_saved:
         profile.saved_quizzes.remove(quiz)
-        messages.info(request, f'"{quiz.title}" removed from saved quizzes.')
+        message = f'"{quiz.title}" removed from saved quizzes.'
+        is_saved = False
     else:
         profile.saved_quizzes.add(quiz)
-        messages.success(request, f'"{quiz.title}" saved to your profile!')
+        message = f'"{quiz.title}" saved to your profile!'
+        is_saved = True
     
-    # Redirect back to the previous page
+    # Return JSON for AJAX requests
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({
+            'success': True,
+            'saved': is_saved,
+            'message': message
+        })
+    
+    # Regular request - redirect with message
+    if is_saved:
+        messages.success(request, message)
+    else:
+        messages.info(request, message)
+    
     return redirect(request.META.get('HTTP_REFERER', 'home'))
