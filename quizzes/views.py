@@ -8,7 +8,15 @@ from .services import QuizGeneratorService
 
 def home(request):
     """Homepage view with featured quizzes."""
-    featured_quizzes = Quiz.objects.all().order_by('-created_at')[:6]
+    # Get featured quizzes first, then fill with recent if needed
+    featured_quizzes = Quiz.objects.filter(is_featured=True).order_by('-created_at')[:6]
+    
+    # If less than 6 featured, fill with recent non-featured quizzes
+    if featured_quizzes.count() < 6:
+        featured_ids = list(featured_quizzes.values_list('id', flat=True))
+        remaining = 6 - featured_quizzes.count()
+        recent_quizzes = Quiz.objects.exclude(id__in=featured_ids).order_by('-created_at')[:remaining]
+        featured_quizzes = list(featured_quizzes) + list(recent_quizzes)
     
     # Check if we need to show signup modal for guest limit
     show_signup_modal = request.session.pop('show_signup_modal', False)
