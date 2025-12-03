@@ -76,7 +76,7 @@
 # Question Cards
 --------------------------------------------------------------*/
 .question-form-card {
-    background-color: var(--eerie-black);
+    background-color: var(--carbon-light);
     border: none;
     border-left: 4px solid var(--blaze-orange);
 }
@@ -93,7 +93,7 @@
 }
 
 .question-form-card .card-body {
-    background-color: var(--eerie-black);
+    background-color: var(--carbon-light);
     padding: 1.25rem;
 }
 

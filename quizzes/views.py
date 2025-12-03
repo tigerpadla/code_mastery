@@ -10,8 +10,12 @@ def home(request):
     """Homepage view with featured quizzes."""
     featured_quizzes = Quiz.objects.all().order_by('-created_at')[:6]
     
+    # Check if we need to show signup modal for guest limit
+    show_signup_modal = request.session.pop('show_signup_modal', False)
+    
     context = {
         'featured_quizzes': featured_quizzes,
+        'show_signup_modal': show_signup_modal,
     }
     return render(request, 'index.html', context)
 
@@ -28,6 +32,13 @@ def quiz_generate(request):
         if len(topic) > 200:
             messages.error(request, 'Topic is too long. Please use 200 characters or less.')
             return redirect('home')
+        
+        # Limit guest users to 1 quiz generation
+        if not request.user.is_authenticated:
+            guest_quiz_count = request.session.get('guest_quiz_count', 0)
+            if guest_quiz_count >= 1:
+                request.session['show_signup_modal'] = True
+                return redirect('home')
         
         try:
             # Generate quiz using AI
@@ -62,6 +73,10 @@ def quiz_generate(request):
                         explanation=q_data.get('explanation', ''),
                         order=i + 1,
                     )
+            
+            # Increment guest quiz count after successful generation
+            if not request.user.is_authenticated:
+                request.session['guest_quiz_count'] = request.session.get('guest_quiz_count', 0) + 1
             
             messages.success(request, f'Quiz "{quiz.title}" generated successfully!')
             return redirect('quizzes:detail', slug=quiz.slug)
