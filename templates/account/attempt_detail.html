@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load quiz_filters %}
+
+{% block title %}Attempt Review | {{ attempt.quiz.title }}{% endblock %}
+
+{% block content %}
+<section class="quiz-results section py-5">
+    <div class="container">
+        <!-- Results Header -->
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <div class="score-circle mb-4">
+                    <div class="score-value {% if score_percentage >= 70 %}text-success{% elif score_percentage >= 50 %}text-warning{% else %}text-danger{% endif %}">
+                        {{ score_percentage }}%
+                    </div>
+                    <div class="score-label">Score</div>
+                </div>
+                <h1 class="fw-bold mb-3">
+                    <i class="fas fa-history text-info me-2"></i>Attempt Review
+                </h1>
+                <p class="lead text-muted">
+                    You scored <strong>{{ attempt.score }}</strong> out of <strong>{{ attempt.total_questions }}</strong>
+                    on <strong>{{ attempt.quiz.title }}</strong>
+                </p>
+                <p class="text-muted">
+                    <i class="far fa-calendar-alt me-1"></i>
+                    {{ attempt.completed_at|date:"F j, Y \a\t g:i A" }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Results Breakdown -->
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h3 class="mb-4">
+                    <i class="fas fa-list-check me-2 text-orange"></i>Results Breakdown
+                </h3>
+                
+                {% for result in results %}
+                <div class="card mb-4 result-card {% if result.is_correct %}result-correct{% else %}result-incorrect{% endif %}">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span class="question-number">Question {{ forloop.counter }}</span>
+                        {% if result.is_correct %}
+                        <span class="badge bg-success">
+                            <i class="fas fa-check me-1"></i>Correct
+                        </span>
+                        {% else %}
+                        <span class="badge bg-danger">
+                            <i class="fas fa-times me-1"></i>Incorrect
+                        </span>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <p class="question-text mb-4">{{ result.question.text|render_code }}</p>
+                        
+                        <div class="options">
+                            {% with q=result.question %}
+                            <!-- Option A -->
+                            <div class="result-option mb-2 {% if q.correct_answer == 'A' %}correct-answer{% endif %} {% if result.user_answer == 'A' and not result.is_correct %}wrong-answer{% endif %}">
+                                <span class="option-letter {% if q.correct_answer == 'A' %}bg-success{% elif result.user_answer == 'A' %}bg-danger{% endif %}">A</span>
+                                {{ q.option_a|render_code }}
+                                {% if q.correct_answer == 'A' %}
+                                <i class="fas fa-check-circle text-success ms-auto"></i>
+                                {% elif result.user_answer == 'A' %}
+                                <i class="fas fa-times-circle text-danger ms-auto"></i>
+                                {% endif %}
+                            </div>
+                            <!-- Option B -->
+                            <div class="result-option mb-2 {% if q.correct_answer == 'B' %}correct-answer{% endif %} {% if result.user_answer == 'B' and not result.is_correct %}wrong-answer{% endif %}">
+                                <span class="option-letter {% if q.correct_answer == 'B' %}bg-success{% elif result.user_answer == 'B' %}bg-danger{% endif %}">B</span>
+                                {{ q.option_b|render_code }}
+                                {% if q.correct_answer == 'B' %}
+                                <i class="fas fa-check-circle text-success ms-auto"></i>
+                                {% elif result.user_answer == 'B' %}
+                                <i class="fas fa-times-circle text-danger ms-auto"></i>
+                                {% endif %}
+                            </div>
+                            <!-- Option C -->
+                            <div class="result-option mb-2 {% if q.correct_answer == 'C' %}correct-answer{% endif %} {% if result.user_answer == 'C' and not result.is_correct %}wrong-answer{% endif %}">
+                                <span class="option-letter {% if q.correct_answer == 'C' %}bg-success{% elif result.user_answer == 'C' %}bg-danger{% endif %}">C</span>
+                                {{ q.option_c|render_code }}
+                                {% if q.correct_answer == 'C' %}
+                                <i class="fas fa-check-circle text-success ms-auto"></i>
+                                {% elif result.user_answer == 'C' %}
+                                <i class="fas fa-times-circle text-danger ms-auto"></i>
+                                {% endif %}
+                            </div>
+                            <!-- Option D -->
+                            <div class="result-option mb-2 {% if q.correct_answer == 'D' %}correct-answer{% endif %} {% if result.user_answer == 'D' and not result.is_correct %}wrong-answer{% endif %}">
+                                <span class="option-letter {% if q.correct_answer == 'D' %}bg-success{% elif result.user_answer == 'D' %}bg-danger{% endif %}">D</span>
+                                {{ q.option_d|render_code }}
+                                {% if q.correct_answer == 'D' %}
+                                <i class="fas fa-check-circle text-success ms-auto"></i>
+                                {% elif result.user_answer == 'D' %}
+                                <i class="fas fa-times-circle text-danger ms-auto"></i>
+                                {% endif %}
+                            </div>
+                            {% endwith %}
+                        </div>
+                        
+                        {% if result.question.explanation %}
+                        <div class="explanation mt-3 p-3">
+                            <strong><i class="fas fa-lightbulb text-warning me-2"></i>Explanation:</strong>
+                            <p class="mb-0 mt-2">{{ result.question.explanation|render_code }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% empty %}
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Unable to load question details for this attempt.
+                </div>
+                {% endfor %}
+
+                <!-- Action Buttons -->
+                <div class="d-flex justify-content-between align-items-center mt-5">
+                    <a href="{% url 'accounts:quiz_history' %}" class="btn btn-back">
+                        <i class="fas fa-arrow-left me-2"></i>Back to History
+                    </a>
+                    <a href="{% url 'quizzes:detail' slug=attempt.quiz.slug %}" class="btn btn-primary">
+                        <i class="fas fa-redo me-2"></i>Retake Quiz
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/pages/quiz-results.css' %}" rel="stylesheet">
+{% endblock %}

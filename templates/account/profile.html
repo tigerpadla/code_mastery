@@ -34,9 +34,14 @@
                                         {% endif %}
                                     </div>
                                     {% if is_own_profile %}
-                                    <a href="{% url 'accounts:profile_edit' %}" class="btn btn-outline-primary">
-                                        <i class="fas fa-edit me-2"></i>Edit Profile
-                                    </a>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <a href="{% url 'accounts:quiz_history' %}" class="btn btn-outline-primary">
+                                            <i class="fas fa-history me-2"></i>Quiz History
+                                        </a>
+                                        <a href="{% url 'accounts:profile_edit' %}" class="btn btn-primary">
+                                            <i class="fas fa-edit me-2"></i>Edit Profile
+                                        </a>
+                                    </div>
                                     {% endif %}
                                 </div>
                             </div>
@@ -53,8 +58,15 @@
                                 <div class="stat-label text-muted">Quizzes Saved</div>
                             </div>
                             <div class="col-6 col-md-3 text-center">
+                                {% if is_own_profile %}
+                                <a href="{% url 'accounts:quiz_history' %}" class="text-decoration-none">
+                                    <div class="stat-value text-orange">{{ total_attempts }}</div>
+                                    <div class="stat-label text-muted">Quizzes Taken <i class="fas fa-external-link-alt small"></i></div>
+                                </a>
+                                {% else %}
                                 <div class="stat-value text-orange">{{ total_attempts }}</div>
                                 <div class="stat-label text-muted">Quizzes Taken</div>
+                                {% endif %}
                             </div>
                             <div class="col-6 col-md-3 text-center">
                                 <div class="stat-value text-orange">{% if total_attempts > 0 %}{{ avg_percentage }}%{% else %}-{% endif %}</div>

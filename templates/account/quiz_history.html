@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Quiz History - Code Mastery{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/pages/auth.css' %}" rel="stylesheet">
+<style>
+    .quiz-history-section .table {
+        --bs-table-hover-bg: rgba(255, 255, 255, 0.05);
+    }
+    .quiz-history-section .table th,
+    .quiz-history-section .table td {
+        border-color: var(--charcoal);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="quiz-history-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card auth-card">
+                    <div class="card-body p-4 p-md-5">
+                        <!-- Header -->
+                        <div class="text-center mb-4">
+                            <h2 class="fw-bold text-orange mb-2">
+                                <i class="fas fa-history me-2"></i>Quiz History
+                            </h2>
+                            <p class="text-muted">Review your past quiz attempts</p>
+                        </div>
+
+                        {% if attempts %}
+                        <div class="table-responsive">
+                        <table class="table table-dark table-hover mb-0" style="--bs-table-bg: transparent;">
+                            <thead>
+                                <tr>
+                                    <th>Quiz</th>
+                                    <th>Score</th>
+                                    <th>Date</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for attempt in attempts %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            {% if attempt.quiz.is_ai_generated %}
+                                            <span class="badge bg-warning text-dark me-2">
+                                                <i class="fas fa-robot"></i>
+                                            </span>
+                                            {% else %}
+                                            <span class="badge bg-info text-dark me-2">
+                                                <i class="fas fa-pen"></i>
+                                            </span>
+                                            {% endif %}
+                                            <span>{{ attempt.quiz.title|truncatewords:8 }}</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="{% if attempt.percentage >= 70 %}text-success{% elif attempt.percentage >= 50 %}text-warning{% else %}text-danger{% endif %}">
+                                            {{ attempt.score }}/{{ attempt.total_questions }}
+                                            <small class="text-muted">({{ attempt.percentage }}%)</small>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <small class="text-muted">
+                                            {{ attempt.completed_at|date:"M d, Y" }}
+                                            <br>{{ attempt.completed_at|time:"g:i A" }}
+                                        </small>
+                                    </td>
+                                    <td class="text-end">
+                                        <a href="{% url 'accounts:attempt_detail' attempt_id=attempt.id %}" 
+                                           class="btn btn-sm btn-outline-primary me-1" title="View Details">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{% url 'quizzes:detail' slug=attempt.quiz.slug %}" 
+                                           class="btn btn-sm btn-primary" title="Retake Quiz">
+                                            <i class="fas fa-redo"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Back Button -->
+                    <div class="text-center mt-4">
+                        <a href="{% url 'accounts:profile' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Profile
+                        </a>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-clipboard-list fa-3x text-muted mb-3"></i>
+                        <h4>No Quiz Attempts Yet</h4>
+                        <p class="text-muted mb-4">Take some quizzes to see your history here!</p>
+                        <a href="{% url 'home' %}" class="btn btn-primary">
+                            <i class="fas fa-play me-2"></i>Browse Quizzes
+                        </a>
+                    </div>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

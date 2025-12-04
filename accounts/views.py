@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.db.models import Avg
 from .models import Profile
+from quizzes.models import QuizAttempt, Question
 
 
 @login_required
@@ -117,3 +118,42 @@ def save_quiz(request, quiz_id):
         messages.info(request, message)
     
     return redirect(request.META.get('HTTP_REFERER', 'home'))
+
+
+@login_required
+def quiz_history(request):
+    """Display user's quiz attempt history."""
+    attempts = QuizAttempt.objects.filter(user=request.user).select_related('quiz')
+    
+    context = {
+        'attempts': attempts,
+    }
+    return render(request, 'account/quiz_history.html', context)
+
+
+@login_required
+def attempt_detail(request, attempt_id):
+    """Display detailed view of a quiz attempt."""
+    attempt = get_object_or_404(QuizAttempt, id=attempt_id, user=request.user)
+    questions = attempt.quiz.questions.all()
+    
+    # Build results with user's answers
+    results = []
+    for question in questions:
+        user_answer = attempt.answers.get(str(question.id), '')
+        is_correct = user_answer == question.correct_answer
+        results.append({
+            'question': question,
+            'user_answer': user_answer,
+            'is_correct': is_correct,
+        })
+    
+    context = {
+        'attempt': attempt,
+        'quiz': attempt.quiz,
+        'results': results,
+        'correct_count': attempt.score,
+        'total_questions': attempt.total_questions,
+        'score_percentage': attempt.percentage,
+    }
+    return render(request, 'account/attempt_detail.html', context)

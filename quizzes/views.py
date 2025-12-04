@@ -270,5 +270,3 @@ def quiz_delete(request, slug):
         return redirect('home')
     
     return redirect('quizzes:detail', slug=slug)
-
-
