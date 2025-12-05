@@ -205,4 +205,63 @@
         }
     }, true);
 
+    /**
+     * Share profile functionality (using event delegation)
+     */
+    document.addEventListener('click', function(e) {
+        const btn = e.target.closest('.share-profile-btn');
+        if (!btn) return;
+        
+        e.preventDefault();
+        const profileUrl = btn.getAttribute('data-profile-url');
+        const username = btn.getAttribute('data-username');
+        const fullUrl = window.location.origin + profileUrl;
+        
+        // Try native share API first (mobile)
+        if (navigator.share) {
+            navigator.share({
+                title: `${username}'s Profile - Code Mastery`,
+                text: `Check out ${username}'s profile on Code Mastery!`,
+                url: fullUrl
+            }).catch(() => {
+                // User cancelled or error, fall back to clipboard
+                copyProfileUrl(btn, fullUrl);
+            });
+        } else {
+            // Fallback to clipboard
+            copyProfileUrl(btn, fullUrl);
+        }
+    });
+
+    /**
+     * Helper function to copy profile URL to clipboard
+     */
+    function copyProfileUrl(button, url) {
+        navigator.clipboard.writeText(url).then(() => {
+            const icon = button.querySelector('i');
+            if (icon) {
+                icon.className = 'fas fa-check';
+                setTimeout(() => {
+                    icon.className = 'fas fa-share-alt';
+                }, 2000);
+            }
+        }).catch(() => {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = url;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            
+            const icon = button.querySelector('i');
+            if (icon) {
+                icon.className = 'fas fa-check';
+                setTimeout(() => {
+                    icon.className = 'fas fa-share-alt';
+                }, 2000);
+            }
+        });
+    }
+
 })();

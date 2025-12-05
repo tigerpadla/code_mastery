@@ -22,7 +22,17 @@
                             <div class="col-md">
                                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-center align-items-md-start">
                                     <div class="text-center text-md-start mb-3 mb-md-0">
-                                        <h1 class="fw-bold mb-1">{{ profile_user.username }}</h1>
+                                        <h1 class="fw-bold mb-1">
+                                            {{ profile_user.username }}
+                                            {% if is_own_profile %}
+                                            <button type="button" class="btn btn-link share-profile-btn p-0 ms-2 text-orange share-icon-btn"
+                                                    data-profile-url="{% url 'accounts:profile_user' username=profile_user.username %}"
+                                                    data-username="{{ profile_user.username }}"
+                                                    title="Share your profile">
+                                                <i class="fas fa-share-alt"></i>
+                                            </button>
+                                            {% endif %}
+                                        </h1>
                                         <p class="text-muted mb-2">
                                             <i class="fas fa-calendar-alt me-1"></i>
                                             Joined {{ profile_user.date_joined|date:"F Y" }}
@@ -53,10 +63,12 @@
                                 <div class="stat-value text-orange">{{ total_created }}</div>
                                 <div class="stat-label text-muted">Quizzes Created</div>
                             </div>
+                            {% if is_own_profile %}
                             <div class="col-6 col-md-3 text-center mb-3 mb-md-0">
                                 <div class="stat-value text-orange">{{ total_saved }}</div>
                                 <div class="stat-label text-muted">Quizzes Saved</div>
                             </div>
+                            {% endif %}
                             <div class="col-6 col-md-3 text-center">
                                 {% if is_own_profile %}
                                 <a href="{% url 'accounts:quiz_history' %}" class="text-decoration-none">

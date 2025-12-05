@@ -4,23 +4,27 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.db.models import Avg
 from .models import Profile
-from quizzes.models import QuizAttempt, Question
+from quizzes.models import QuizAttempt
 
 
-@login_required
 def profile_view(request, username=None):
-    """Display user profile."""
+    """Display user profile. Public profiles are viewable by anyone."""
     if username:
         user = get_object_or_404(User, username=username)
     else:
+        # Viewing own profile requires login
+        if not request.user.is_authenticated:
+            return redirect('account_login')
         user = request.user
     
     profile = user.profile
     created_quizzes = user.created_quizzes.all().order_by('-created_at')[:6]
-    saved_quizzes = profile.saved_quizzes.all().order_by('-created_at')[:6]
     
     # Check if viewing own profile
-    is_own_profile = request.user == user
+    is_own_profile = request.user.is_authenticated and request.user == user
+    
+    # Only show saved quizzes on own profile
+    saved_quizzes = profile.saved_quizzes.all().order_by('-created_at')[:6] if is_own_profile else []
     
     # Calculate quiz attempt stats
     quiz_attempts = user.quiz_attempts.all()
@@ -45,7 +49,7 @@ def profile_view(request, username=None):
         'saved_quizzes': saved_quizzes,
         'is_own_profile': is_own_profile,
         'total_created': user.created_quizzes.count(),
-        'total_saved': profile.saved_quizzes.count(),
+        'total_saved': profile.saved_quizzes.count() if is_own_profile else 0,
         'total_attempts': total_attempts,
         'avg_percentage': avg_percentage,
     }
