@@ -271,8 +271,10 @@ p {
 }
 
 .navmenu .dropdown-divider {
-    border-color: var(--carbon-lighter);
-    margin: 5px 0;
+    border: none;
+    border-top: 1px solid var(--carbon-lighter);
+    margin: 8px 15px;
+    opacity: 1;
 }
 
 /* Notification Bell */
