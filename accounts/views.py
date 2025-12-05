@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Avg
 from .models import Profile
-from quizzes.models import Quiz, QuizAttempt
+from quizzes.models import Quiz, QuizAttempt, Notification
 
 
 def profile_view(request, username=None):
@@ -104,6 +104,15 @@ def save_quiz(request, quiz_id):
         profile.saved_quizzes.add(quiz)
         message = f'"{quiz.title}" saved to your profile!'
         is_saved = True
+        
+        # Notify quiz creator (if not self)
+        if quiz.creator and quiz.creator != request.user:
+            Notification.objects.create(
+                recipient=quiz.creator,
+                notification_type=Notification.NotificationType.QUIZ_SAVED,
+                message=f'{request.user.username} saved your quiz "{quiz.title}"',
+                related_quiz=quiz,
+            )
     
     # Return JSON for AJAX requests
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
@@ -159,3 +168,43 @@ def attempt_detail(request, attempt_id):
         'score_percentage': attempt.percentage,
     }
     return render(request, 'account/attempt_detail.html', context)
+
+
+@login_required
+def notifications_list(request):
+    """Display all notifications for the current user."""
+    notifications = Notification.objects.filter(recipient=request.user)
+    unread_count = notifications.filter(is_read=False).count()
+    
+    context = {
+        'notifications': notifications,
+        'unread_count': unread_count,
+    }
+    return render(request, 'account/notifications.html', context)
+
+
+@login_required
+def notification_mark_read(request, notification_id=None):
+    """Mark a single notification or all notifications as read."""
+    if request.method != 'POST':
+        return redirect('accounts:notifications')
+    
+    if notification_id:
+        # Mark single notification as read
+        notification = get_object_or_404(
+            Notification, id=notification_id, recipient=request.user
+        )
+        notification.is_read = True
+        notification.save()
+    else:
+        # Mark all notifications as read
+        Notification.objects.filter(
+            recipient=request.user, is_read=False
+        ).update(is_read=True)
+        messages.success(request, 'All notifications marked as read.')
+    
+    # Return JSON for AJAX requests
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({'success': True})
+    
+    return redirect('accounts:notifications')

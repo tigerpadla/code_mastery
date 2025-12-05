@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Notifications - Code Mastery{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/notifications.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="h2 mb-1 text-orange">
+                        <i class="fa-solid fa-bell me-2"></i>Notifications
+                    </h1>
+                    <p class="text-muted mb-0">
+                        {% if unread_count > 0 %}
+                            You have {{ unread_count }} unread notification{{ unread_count|pluralize }}
+                        {% else %}
+                            All caught up!
+                        {% endif %}
+                    </p>
+                </div>
+                {% if unread_count > 0 %}
+                <form action="{% url 'accounts:notifications_mark_all_read' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-orange btn-sm">
+                        <i class="fa-solid fa-check-double me-1"></i>Mark all as read
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+
+            <!-- Notifications List -->
+            {% if notifications %}
+                <div class="notifications-list">
+                    {% for notification in notifications %}
+                    <div class="notification-item card mb-3 {% if not notification.is_read %}unread{% endif %}">
+                        <div class="card-body d-flex align-items-start">
+                            <!-- Icon -->
+                            <div class="notification-icon me-3">
+                                {% if notification.notification_type == 'quiz_completed' %}
+                                    <i class="fa-solid fa-trophy text-success"></i>
+                                {% elif notification.notification_type == 'quiz_saved' %}
+                                    <i class="fa-solid fa-bookmark text-orange"></i>
+                                {% else %}
+                                    <i class="fa-solid fa-circle-info text-info"></i>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Content -->
+                            <div class="notification-content flex-grow-1">
+                                <p class="mb-1">{{ notification.message }}</p>
+                                <small class="text-muted">
+                                    <i class="fa-regular fa-clock me-1"></i>
+                                    {{ notification.created_at|timesince }} ago
+                                </small>
+                            </div>
+                            
+                            <!-- Actions -->
+                            <div class="notification-actions ms-3">
+                                {% if notification.related_quiz %}
+                                <a href="{% url 'quizzes:detail' notification.related_quiz.slug %}" 
+                                   class="btn btn-sm btn-outline-light me-2" title="View Quiz">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                                {% endif %}
+                                {% if not notification.is_read %}
+                                <form action="{% url 'accounts:notification_mark_read' notification.id %}" 
+                                      method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-outline-success" title="Mark as read">
+                                        <i class="fa-solid fa-check"></i>
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="fa-solid fa-bell-slash display-1 text-muted mb-3"></i>
+                    <h3 class="text-muted">No notifications yet</h3>
+                    <p class="text-muted">
+                        When someone completes or saves your quizzes, you'll see it here.
+                    </p>
+                    <a href="{% url 'home' %}" class="btn btn-orange mt-3">
+                        <i class="fa-solid fa-house me-2"></i>Go Home
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

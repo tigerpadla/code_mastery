@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.utils import timezone
-from .models import Quiz, Question, QuizAttempt
+from .models import Quiz, Question, QuizAttempt, Notification
 from .services import QuizGeneratorService
 from .forms import QuizForm, QuestionFormSet
 
@@ -152,6 +152,15 @@ def quiz_submit(request, slug):
             answers=answers_dict,
             completed_at=timezone.now(),
         )
+        
+        # Notify quiz creator (if not self)
+        if quiz.creator and quiz.creator != request.user:
+            Notification.objects.create(
+                recipient=quiz.creator,
+                notification_type=Notification.NotificationType.QUIZ_COMPLETED,
+                message=f'{request.user.username} completed your quiz "{quiz.title}" with a score of {round(score_percentage)}%',
+                related_quiz=quiz,
+            )
     
     context = {
         'quiz': quiz,

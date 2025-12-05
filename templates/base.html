@@ -58,6 +58,15 @@
                                 <li><a href="{% url 'account_logout' %}"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a></li>
                             </ul>
                         </li>
+                        <!-- Notification Bell -->
+                        <li class="nav-notification">
+                            <a href="{% url 'accounts:notifications' %}" class="notification-bell" title="Notifications">
+                                <i class="fa-{% if unread_notifications_count > 0 %}solid{% else %}regular{% endif %} fa-bell"></i>
+                                {% if unread_notifications_count > 0 %}
+                                    <span class="notification-badge">{{ unread_notifications_count }}</span>
+                                {% endif %}
+                            </a>
+                        </li>
                     {% else %}
                         <li><a href="{% url 'account_login' %}">Login</a></li>
                     {% endif %}

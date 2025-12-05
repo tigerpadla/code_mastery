@@ -134,6 +134,13 @@ class Notification(models.Model):
         default=NotificationType.SYSTEM
     )
     message = models.TextField()
+    related_quiz = models.ForeignKey(
+        Quiz,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='notifications'
+    )
     is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 

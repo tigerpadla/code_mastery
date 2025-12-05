@@ -1,0 +1,63 @@
+/*--------------------------------------------------------------
+# Notifications Page Styles
+--------------------------------------------------------------*/
+
+/* Mark all as read button */
+.btn-outline-orange {
+    color: var(--blaze-orange);
+    border-color: var(--blaze-orange);
+    background-color: transparent;
+}
+
+.btn-outline-orange:hover {
+    color: var(--carbon-black);
+    background-color: var(--blaze-orange);
+    border-color: var(--blaze-orange);
+}
+
+.notification-item {
+    border-left: 3px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.notification-item.unread {
+    border-left-color: var(--blaze-orange);
+    background-color: rgba(255, 100, 0, 0.05);
+}
+
+.notification-item:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.notification-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--carbon-lighter);
+    border-radius: 50%;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.notification-content p {
+    color: var(--platinum);
+    line-height: 1.5;
+}
+
+.notification-actions {
+    display: flex;
+    align-items: center;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.notification-item:hover .notification-actions {
+    opacity: 1;
+}
+
+/* Empty state */
+.fa-bell-slash {
+    opacity: 0.3;
+}
