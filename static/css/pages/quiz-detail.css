@@ -4,6 +4,7 @@
 
 .question-card {
     border-left: 4px solid var(--blaze-orange);
+    overflow: hidden;
 }
 
 .question-card:hover {
@@ -16,6 +17,10 @@
     border-bottom: 1px solid var(--charcoal);
 }
 
+.question-card .card-body {
+    overflow-x: auto;
+}
+
 .question-number {
     font-weight: 600;
     color: var(--platinum);
@@ -24,6 +29,15 @@
 .question-text {
     font-size: 1.1rem;
     line-height: 1.6;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.question-text .code-inline {
+    display: inline-block;
+    max-width: 100%;
+    overflow-x: auto;
+    vertical-align: middle;
 }
 
 /*--------------------------------------------------------------

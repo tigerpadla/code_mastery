@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.http import JsonResponse
 from django.db.models import Avg
 from .models import Profile
-from quizzes.models import QuizAttempt
+from quizzes.models import Quiz, QuizAttempt
 
 
 def profile_view(request, username=None):
@@ -90,9 +91,6 @@ def profile_edit(request):
 @login_required
 def save_quiz(request, quiz_id):
     """Save/unsave a quiz to user's profile."""
-    from django.http import JsonResponse
-    from quizzes.models import Quiz
-    
     quiz = get_object_or_404(Quiz, id=quiz_id)
     profile = request.user.profile
     

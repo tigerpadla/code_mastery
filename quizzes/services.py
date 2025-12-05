@@ -207,8 +207,8 @@ Return ONLY valid JSON in this exact format (no markdown, no code blocks):
 Requirements:
 - Questions should test practical programming knowledge
 - Options should be plausible (avoid obviously wrong answers)
-- When including code in questions or options, wrap it in backticks like `code here`
-- For multi-line code, use triple backticks like ```code here```
+- For code snippets, wrap them with [code] and [/code] tags, like: [code]console.log("hello")[/code]
+- Write code exactly as it would appear, including backticks for JS template literals: [code]const x = `Hello ${{name}}`[/code]
 - Explanations should be educational and concise
 - Difficulty: {difficulty} (easy=beginner concepts, medium=intermediate, hard=advanced)"""
 

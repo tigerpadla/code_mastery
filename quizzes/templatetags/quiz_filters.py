@@ -13,11 +13,11 @@ register = template.Library()
 @register.filter(name='render_code')
 def render_code(text):
     """
-    Convert backtick-wrapped code to styled <code> tags.
+    Convert code tags to styled <code> elements.
     
-    Handles both:
-    - Inline code: `code here`
-    - Multi-line code blocks: ```code here```
+    Handles:
+    - [code]...[/code] tags for inline code
+    - [codeblock]...[/codeblock] tags for multi-line code
     
     Usage: {{ question.text|render_code }}
     """
@@ -27,21 +27,20 @@ def render_code(text):
     # First escape HTML to prevent XSS
     text = escape(text)
     
-    # Handle multi-line code blocks (```) first
-    # Replace ```...``` with <pre><code>...</code></pre>
+    # Handle [codeblock]...[/codeblock] tags for multi-line code
     text = re.sub(
-        r'```(\w*)\n?(.*?)```',
-        r'<pre><code class="code-block">\2</code></pre>',
+        r'\[codeblock\](.*?)\[/codeblock\]',
+        r'<pre><code class="code-block">\1</code></pre>',
         text,
         flags=re.DOTALL
     )
     
-    # Handle inline code (single backticks)
-    # Replace `...` with <code>...</code>
+    # Handle [code]...[/code] tags for inline code
     text = re.sub(
-        r'`([^`]+)`',
+        r'\[code\](.*?)\[/code\]',
         r'<code class="code-inline">\1</code>',
-        text
+        text,
+        flags=re.DOTALL
     )
     
     return mark_safe(text)

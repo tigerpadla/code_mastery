@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from .models import Quiz, Question
+from django.utils import timezone
+from .models import Quiz, Question, QuizAttempt
 from .services import QuizGeneratorService
+from .forms import QuizForm, QuestionFormSet
 
 
 def home(request):
@@ -113,9 +115,6 @@ def quiz_detail(request, slug):
 
 def quiz_submit(request, slug):
     """Handle quiz submission and show results."""
-    from .models import QuizAttempt
-    from django.utils import timezone
-    
     quiz = get_object_or_404(Quiz, slug=slug)
     
     if request.method != 'POST':
@@ -167,8 +166,6 @@ def quiz_submit(request, slug):
 @login_required
 def quiz_create(request):
     """Create a manual quiz."""
-    from .forms import QuizForm, QuestionFormSet
-    
     if request.method == 'POST':
         quiz_form = QuizForm(request.POST)
         
@@ -214,8 +211,6 @@ def quiz_create(request):
 @login_required
 def quiz_edit(request, slug):
     """Edit an existing quiz."""
-    from .forms import QuizForm, QuestionFormSet
-    
     quiz = get_object_or_404(Quiz, slug=slug)
     
     # Only allow creator to edit

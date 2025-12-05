@@ -74,7 +74,9 @@ code, pre, .code {
     padding: 2px 6px;
     border-radius: 4px;
     font-size: 0.9em;
-    white-space: nowrap;
+    white-space: pre-wrap;
+    word-break: break-word;
+    display: inline;
 }
 
 .code-block {
@@ -90,6 +92,7 @@ code, pre, .code {
     word-wrap: break-word;
     font-size: 0.9em;
     line-height: 1.5;
+    max-width: 100%;
 }
 
 pre {
