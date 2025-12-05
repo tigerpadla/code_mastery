@@ -62,10 +62,10 @@
                             </div>
                             
                             <!-- Actions -->
-                            <div class="notification-actions ms-3">
+                            <div class="notification-actions ms-2 d-flex flex-nowrap gap-1">
                                 {% if notification.related_quiz %}
                                 <a href="{% url 'quizzes:detail' notification.related_quiz.slug %}" 
-                                   class="btn btn-sm btn-outline-light me-2" title="View Quiz">
+                                   class="btn btn-sm btn-outline-light" title="View Quiz">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
                                 {% endif %}

@@ -15,6 +15,19 @@
     border-color: var(--blaze-orange);
 }
 
+/* Solid orange button */
+.btn-orange {
+    color: var(--carbon-black);
+    background-color: var(--blaze-orange);
+    border-color: var(--blaze-orange);
+}
+
+.btn-orange:hover {
+    color: white;
+    background-color: #e55a00;
+    border-color: #e55a00;
+}
+
 .notification-item {
     border-left: 3px solid transparent;
     transition: all 0.2s ease;
