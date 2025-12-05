@@ -57,30 +57,44 @@
     /**
      * Mobile nav toggle
      */
-    on('click', '.mobile-nav-toggle', function(e) {
-        const navmenu = select('.navmenu');
-        const header = select('.header');
+    document.addEventListener('click', function(e) {
+        // Only handle toggle button click
+        if (!e.target.closest('.mobile-nav-toggle')) return;
         
-        navmenu.classList.toggle('mobile-nav-active');
-        this.classList.toggle('bi-list');
-        this.classList.toggle('bi-x');
+        e.preventDefault();
+        const navmenu = document.getElementById('navmenu');
+        const toggle = document.querySelector('.mobile-nav-toggle');
         
-        // Toggle body scroll
-        document.body.classList.toggle('mobile-nav-active');
+        if (navmenu && toggle) {
+            navmenu.classList.toggle('mobile-nav-active');
+            toggle.classList.toggle('fa-bars');
+            toggle.classList.toggle('fa-xmark');
+            document.body.classList.toggle('mobile-nav-active');
+        }
     });
 
     /**
-     * Close mobile nav on same-page link click
+     * Close mobile nav on link click
      */
-    on('click', '.navmenu a', function(e) {
-        const navmenu = select('.navmenu');
-        if (navmenu.classList.contains('mobile-nav-active')) {
-            navmenu.classList.remove('mobile-nav-active');
-            select('.mobile-nav-toggle').classList.toggle('bi-list');
-            select('.mobile-nav-toggle').classList.toggle('bi-x');
+    document.addEventListener('click', function(e) {
+        const link = e.target.closest('#navmenu a');
+        if (!link) return;
+        
+        // Only if mobile nav is open
+        if (!document.body.classList.contains('mobile-nav-active')) return;
+        
+        // Close after brief delay to allow navigation
+        setTimeout(function() {
+            const navmenu = document.getElementById('navmenu');
+            const toggle = document.querySelector('.mobile-nav-toggle');
+            if (navmenu) navmenu.classList.remove('mobile-nav-active');
+            if (toggle) {
+                toggle.classList.add('fa-bars');
+                toggle.classList.remove('fa-xmark');
+            }
             document.body.classList.remove('mobile-nav-active');
-        }
-    }, true);
+        }, 150);
+    });
 
     /**
      * Scroll top button
