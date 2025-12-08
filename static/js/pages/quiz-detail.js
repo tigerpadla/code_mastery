@@ -2,6 +2,7 @@
  * Quiz Detail Page JavaScript
  * Handles form validation and unanswered question highlighting
  */
+/* jshint esversion: 11 */
 
 document.addEventListener('DOMContentLoaded', function() {
     const quizForm = document.getElementById('quiz-form');
@@ -40,9 +41,9 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             
             // Show alert message
-            const message = unansweredCount === 1 
-                ? 'Please answer the highlighted question before submitting.'
-                : `Please answer all ${unansweredCount} highlighted questions before submitting.`;
+            const message = unansweredCount === 1 ?
+                'Please answer the highlighted question before submitting.' :
+                `Please answer all ${unansweredCount} highlighted questions before submitting.`;
             
             // Remove existing alert if any
             const existingAlert = document.querySelector('.quiz-validation-alert');
@@ -194,7 +195,6 @@ function initSaveQuizButtons() {
             
             const quizId = this.dataset.quizId;
             const csrfToken = this.dataset.csrfToken;
-            const isSaved = this.dataset.saved === 'true';
             
             try {
                 const response = await fetch(`/accounts/quiz/${quizId}/save/`, {

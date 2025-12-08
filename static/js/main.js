@@ -1,6 +1,8 @@
 /**
  * Code Mastery - Main JavaScript
 */
+/* jshint esversion: 11 */
+/* global bootstrap */
 
 (function() {
     "use strict";
@@ -175,7 +177,7 @@
      */
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     if (tooltipTriggerList.length) {
-        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+        [...tooltipTriggerList].forEach(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
     }
 
     /**
@@ -183,7 +185,7 @@
      */
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
     if (popoverTriggerList.length) {
-        const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+        [...popoverTriggerList].forEach(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
     }
 
     /**

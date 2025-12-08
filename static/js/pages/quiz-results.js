@@ -2,6 +2,7 @@
  * Quiz Results Page JavaScript
  * Handles share and save functionality
  */
+/* jshint esversion: 11 */
 
 document.addEventListener('DOMContentLoaded', function() {
     // Share button functionality

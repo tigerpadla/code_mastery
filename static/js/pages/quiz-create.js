@@ -2,6 +2,7 @@
  * Quiz Create/Edit Page JavaScript
  * Handles dynamic question form management
  */
+/* jshint esversion: 11 */
 
 document.addEventListener('DOMContentLoaded', function() {
     const questionsContainer = document.getElementById('questions-container');

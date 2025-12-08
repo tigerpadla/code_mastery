@@ -2,6 +2,7 @@
  * Home Page JavaScript
  * Handles the quiz generator form, loading modal, and random topic generation
  */
+/* jshint esversion: 11 */
 
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('quiz-generator-form');
