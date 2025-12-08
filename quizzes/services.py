@@ -17,14 +17,14 @@ class QuizGeneratorService:
 
     API_URL = "https://models.inference.ai.azure.com/chat/completions"
     MODEL = "gpt-4o-mini"
-    
+
     # Programming and tech-related keywords for topic validation
     ALLOWED_KEYWORDS = [
         # Programming Languages
         'python', 'javascript', 'java', 'c++', 'c#', 'csharp', 'ruby', 'php',
         'swift', 'kotlin', 'go', 'golang', 'rust', 'typescript', 'scala',
         'perl', 'r ', 'matlab', 'lua', 'dart', 'elixir', 'haskell', 'clojure',
-        
+
         # Web Development
         'html', 'css', 'sass', 'scss', 'less', 'bootstrap', 'tailwind',
         'react', 'angular', 'vue', 'svelte', 'next.js', 'nextjs', 'nuxt',
@@ -32,18 +32,18 @@ class QuizGeneratorService:
         'asp.net', 'spring', 'frontend', 'backend', 'fullstack', 'full-stack',
         'web development', 'web design', 'responsive', 'ajax', 'fetch', 'api',
         'rest', 'graphql', 'websocket', 'http', 'dom', 'browser',
-        
+
         # Databases
         'sql', 'mysql', 'postgresql', 'postgres', 'mongodb', 'redis', 'sqlite',
         'oracle', 'database', 'nosql', 'query', 'queries', 'orm', 'schema',
         'normalization', 'index', 'join', 'crud',
-        
+
         # DevOps & Tools
         'git', 'github', 'gitlab', 'bitbucket', 'docker', 'kubernetes', 'k8s',
         'aws', 'azure', 'gcp', 'cloud', 'linux', 'unix', 'bash', 'shell',
         'ci/cd', 'jenkins', 'devops', 'deployment', 'server', 'nginx', 'apache',
         'terminal', 'command line', 'cli', 'ssh', 'heroku', 'vercel', 'netlify',
-        
+
         # Programming Concepts
         'algorithm', 'data structure', 'array', 'list', 'dictionary', 'hash',
         'tree', 'graph', 'stack', 'queue', 'heap', 'linked list', 'binary',
@@ -52,22 +52,22 @@ class QuizGeneratorService:
         'encapsulation', 'abstraction', 'interface', 'design pattern', 'solid',
         'dry', 'kiss', 'clean code', 'refactoring', 'debugging', 'testing',
         'unit test', 'tdd', 'bdd', 'agile', 'scrum',
-        
+
         # Data & AI
         'machine learning', 'ml', 'artificial intelligence', 'ai', 'deep learning',
         'neural network', 'tensorflow', 'pytorch', 'pandas', 'numpy', 'scipy',
         'data science', 'data analysis', 'big data', 'data engineering',
         'statistics', 'visualization', 'matplotlib', 'jupyter', 'notebook',
-        
+
         # Security & Networking
         'security', 'cybersecurity', 'encryption', 'authentication', 'oauth',
         'jwt', 'csrf', 'xss', 'sql injection', 'hashing', 'ssl', 'tls',
         'networking', 'tcp', 'ip', 'dns', 'firewall', 'vpn', 'protocol',
-        
+
         # Mobile Development
         'android', 'ios', 'mobile', 'react native', 'flutter', 'xamarin',
         'app development', 'mobile app',
-        
+
         # General Tech
         'programming', 'coding', 'software', 'developer', 'development',
         'computer science', 'cs', 'tech', 'technology', 'it', 'information technology',
@@ -88,20 +88,20 @@ class QuizGeneratorService:
     def is_valid_topic(self, topic: str) -> bool:
         """
         Check if the topic is related to programming/technology.
-        
+
         Args:
             topic: The topic to validate
-            
+
         Returns:
             True if topic is programming-related, False otherwise
         """
         topic_lower = topic.lower()
-        
+
         # Check if any allowed keyword is in the topic
         for keyword in self.ALLOWED_KEYWORDS:
             if keyword in topic_lower:
                 return True
-        
+
         return False
 
     def generate_quiz(
@@ -117,7 +117,7 @@ class QuizGeneratorService:
 
         Returns:
             Dictionary with quiz data or None if generation fails
-            
+
         Raises:
             ValueError: If topic is not programming-related
         """
@@ -127,7 +127,7 @@ class QuizGeneratorService:
                 "Please enter a programming or technology-related topic. "
                 "Examples: Python loops, JavaScript arrays, SQL queries, Git commands..."
             )
-        
+
         prompt = self._build_prompt(topic, num_questions, difficulty)
 
         headers = {
@@ -185,7 +185,8 @@ class QuizGeneratorService:
         """Build the prompt for quiz generation."""
         return f"""Generate a {difficulty} difficulty programming quiz about: {topic}
 
-Create exactly {num_questions} multiple choice questions. Each question must have exactly 4 options (A, B, C, D) with only one correct answer.
+Create exactly {num_questions} multiple choice questions.
+Each question must have exactly 4 options (A, B, C, D) with one correct answer.
 
 Return ONLY valid JSON in this exact format (no markdown, no code blocks):
 {{
@@ -207,10 +208,10 @@ Return ONLY valid JSON in this exact format (no markdown, no code blocks):
 Requirements:
 - Questions should test practical programming knowledge
 - Options should be plausible (avoid obviously wrong answers)
-- For code snippets, wrap them with [code] and [/code] tags, like: [code]console.log("hello")[/code]
-- Write code exactly as it would appear, including backticks for JS template literals: [code]const x = `Hello ${{name}}`[/code]
+- For code snippets, use [code]...[/code] tags, e.g.: [code]console.log("hello")[/code]
+- For JS template literals use backticks: [code]const x = `Hello ${{name}}`[/code]
 - Explanations should be educational and concise
-- Difficulty: {difficulty} (easy=beginner concepts, medium=intermediate, hard=advanced)"""
+- Difficulty: {difficulty} (easy=beginner, medium=intermediate, hard=advanced)"""
 
     def _parse_response(self, content: str) -> Optional[dict]:
         """Parse the AI response and extract quiz data."""
@@ -229,11 +230,13 @@ Requirements:
 
             # Validate structure
             if "title" not in quiz_data or "questions" not in quiz_data:
-                logger.warning("Invalid quiz structure: missing title or questions")
+                logger.warning(
+                    "Invalid quiz structure: missing title or questions")
                 return None
 
             if not isinstance(quiz_data["questions"], list):
-                logger.warning("Invalid quiz structure: questions is not a list")
+                logger.warning(
+                    "Invalid quiz structure: questions is not a list")
                 return None
 
             # Validate each question
@@ -248,13 +251,17 @@ Requirements:
                 ]
                 for field in required_fields:
                     if field not in q:
-                        logger.warning(f"Question {i + 1} missing field: {field}")
+                        logger.warning(
+                            f"Question {
+                                i + 1} missing field: {field}")
                         return None
 
                 # Normalize correct_answer to uppercase
                 q["correct_answer"] = q["correct_answer"].upper()
                 if q["correct_answer"] not in ["A", "B", "C", "D"]:
-                    logger.warning(f"Question {i + 1} has invalid correct_answer")
+                    logger.warning(
+                        f"Question {
+                            i + 1} has invalid correct_answer")
                     return None
 
             return quiz_data

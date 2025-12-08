@@ -14,19 +14,19 @@ register = template.Library()
 def render_code(text):
     """
     Convert code tags to styled <code> elements.
-    
+
     Handles:
     - [code]...[/code] tags for inline code
     - [codeblock]...[/codeblock] tags for multi-line code
-    
+
     Usage: {{ question.text|render_code }}
     """
     if not text:
         return text
-    
+
     # First escape HTML to prevent XSS
     text = escape(text)
-    
+
     # Handle [codeblock]...[/codeblock] tags for multi-line code
     text = re.sub(
         r'\[codeblock\](.*?)\[/codeblock\]',
@@ -34,7 +34,7 @@ def render_code(text):
         text,
         flags=re.DOTALL
     )
-    
+
     # Handle [code]...[/code] tags for inline code
     text = re.sub(
         r'\[code\](.*?)\[/code\]',
@@ -42,5 +42,5 @@ def render_code(text):
         text,
         flags=re.DOTALL
     )
-    
+
     return mark_safe(text)

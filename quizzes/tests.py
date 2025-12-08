@@ -5,7 +5,6 @@ Tests cover models, views, and templates.
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django.utils import timezone
 from .models import Quiz, Question, QuizAttempt, Notification
 
 
@@ -339,11 +338,12 @@ class QuizSubmitViewTest(TestCase):
     def test_quiz_submit_creates_attempt_for_logged_user(self):
         """Test that quiz attempt is created for logged in user."""
         self.client.login(username='testuser', password='testpass123')
-        response = self.client.post(
+        self.client.post(
             reverse('quizzes:submit', kwargs={'slug': self.quiz.slug}),
             {f'question_{self.question.id}': 'A'}
         )
-        attempt = QuizAttempt.objects.filter(user=self.user, quiz=self.quiz).first()
+        attempt = QuizAttempt.objects.filter(
+            user=self.user, quiz=self.quiz).first()
         self.assertIsNotNone(attempt)
         self.assertEqual(attempt.score, 1)
 
@@ -355,13 +355,13 @@ class QuizSubmitViewTest(TestCase):
         )
         self.quiz.creator = creator
         self.quiz.save()
-        
+
         self.client.login(username='testuser', password='testpass123')
-        response = self.client.post(
+        self.client.post(
             reverse('quizzes:submit', kwargs={'slug': self.quiz.slug}),
             {f'question_{self.question.id}': 'A'}
         )
-        
+
         notification = Notification.objects.filter(
             recipient=creator,
             notification_type='quiz_completed'
@@ -398,7 +398,7 @@ class TemplateTagsTest(TestCase):
 
     def test_quiz_card_displays_correctly(self):
         """Test that quiz cards display correctly on home page."""
-        quiz = Quiz.objects.create(
+        Quiz.objects.create(
             title='Test Quiz',
             description='A test quiz description',
             is_featured=True
@@ -415,4 +415,3 @@ class TemplateTagsTest(TestCase):
         )
         response = self.client.get(reverse('home'))
         self.assertContains(response, '1')
-

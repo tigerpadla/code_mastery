@@ -4,7 +4,7 @@ from .models import Quiz, Question
 
 class QuizForm(forms.ModelForm):
     """Form for creating/editing a quiz."""
-    
+
     class Meta:
         model = Quiz
         fields = ['title', 'description']
@@ -28,10 +28,17 @@ class QuizForm(forms.ModelForm):
 
 class QuestionForm(forms.ModelForm):
     """Form for creating/editing a question."""
-    
+
     class Meta:
         model = Question
-        fields = ['text', 'option_a', 'option_b', 'option_c', 'option_d', 'correct_answer', 'explanation']
+        fields = [
+            'text',
+            'option_a',
+            'option_b',
+            'option_c',
+            'option_d',
+            'correct_answer',
+            'explanation']
         widgets = {
             'text': forms.Textarea(attrs={
                 'class': 'form-control',

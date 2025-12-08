@@ -118,7 +118,9 @@ class ProfileViewTest(TestCase):
     def test_profile_404_for_nonexistent_user(self):
         """Test that 404 is returned for nonexistent username."""
         response = self.client.get(
-            reverse('accounts:profile_user', kwargs={'username': 'nonexistent'})
+            reverse(
+                'accounts:profile_user', kwargs={
+                    'username': 'nonexistent'})
         )
         self.assertEqual(response.status_code, 404)
 
@@ -201,7 +203,7 @@ class SaveQuizViewTest(TestCase):
     def test_save_quiz_adds_to_saved(self):
         """Test that saving a quiz adds it to saved quizzes."""
         self.client.login(username='testuser', password='testpass123')
-        response = self.client.get(
+        self.client.get(
             reverse('accounts:save_quiz', kwargs={'quiz_id': self.quiz.id})
         )
         self.assertIn(self.quiz, self.user.profile.saved_quizzes.all())
@@ -210,7 +212,7 @@ class SaveQuizViewTest(TestCase):
         """Test that unsaving a quiz removes it from saved quizzes."""
         self.client.login(username='testuser', password='testpass123')
         self.user.profile.saved_quizzes.add(self.quiz)
-        response = self.client.get(
+        self.client.get(
             reverse('accounts:save_quiz', kwargs={'quiz_id': self.quiz.id})
         )
         self.assertNotIn(self.quiz, self.user.profile.saved_quizzes.all())
@@ -218,7 +220,7 @@ class SaveQuizViewTest(TestCase):
     def test_save_quiz_creates_notification(self):
         """Test that saving creates a notification for quiz creator."""
         self.client.login(username='testuser', password='testpass123')
-        response = self.client.get(
+        self.client.get(
             reverse('accounts:save_quiz', kwargs={'quiz_id': self.quiz.id})
         )
         notification = Notification.objects.filter(
@@ -353,7 +355,7 @@ class NotificationsViewTest(TestCase):
             message='Test notification',
             is_read=False
         )
-        response = self.client.post(reverse('accounts:notifications_mark_all_read'))
+        self.client.post(
+            reverse('accounts:notifications_mark_all_read'))
         notification = Notification.objects.first()
         self.assertTrue(notification.is_read)
-
