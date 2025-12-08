@@ -98,6 +98,11 @@
                         <i class="fas fa-pen-fancy text-orange me-2"></i>
                         {% if is_own_profile %}My Quizzes{% else %}{{ profile_user.username }}'s Quizzes{% endif %}
                     </h2>
+                    {% if is_own_profile and total_created > 6 %}
+                    <a href="{% url 'accounts:my_quizzes' %}" class="btn btn-outline-primary btn-sm">
+                        View All ({{ total_created }}) <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                    {% endif %}
                 </div>
                 
                 {% if created_quizzes %}
@@ -154,6 +159,11 @@
                     <h2 class="fw-bold mb-0">
                         <i class="fas fa-bookmark text-orange me-2"></i>Saved Quizzes
                     </h2>
+                    {% if total_saved > 6 %}
+                    <a href="{% url 'accounts:saved_quizzes' %}" class="btn btn-outline-primary btn-sm">
+                        View All ({{ total_saved }}) <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                    {% endif %}
                 </div>
                 
                 {% if saved_quizzes %}

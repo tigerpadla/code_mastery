@@ -208,3 +208,33 @@ def notification_mark_read(request, notification_id=None):
         return JsonResponse({'success': True})
     
     return redirect('accounts:notifications')
+
+
+@login_required
+def my_quizzes(request):
+    """Display all quizzes created by the current user."""
+    quizzes = request.user.created_quizzes.all().order_by('-created_at')
+    
+    context = {
+        'quizzes': quizzes,
+        'page_title': 'My Quizzes',
+        'empty_message': 'You haven\'t created any quizzes yet.',
+        'empty_icon': 'fa-pen-fancy',
+        'show_create_btn': True,
+    }
+    return render(request, 'account/quiz_list.html', context)
+
+
+@login_required
+def saved_quizzes(request):
+    """Display all quizzes saved by the current user."""
+    quizzes = request.user.profile.saved_quizzes.all().order_by('-created_at')
+    
+    context = {
+        'quizzes': quizzes,
+        'page_title': 'Saved Quizzes',
+        'empty_message': 'You haven\'t saved any quizzes yet.',
+        'empty_icon': 'fa-bookmark',
+        'show_unsave_btn': True,
+    }
+    return render(request, 'account/quiz_list.html', context)
