@@ -29,8 +29,8 @@
                         </span>
                         {% if user.is_authenticated and user == quiz.creator %}
                         <a href="{% url 'quizzes:edit' slug=quiz.slug %}" 
-                           class="btn btn-sm btn-action" title="Edit quiz">
-                            <i class="fas fa-edit"></i>
+                           class="btn btn-sm btn-action" title="Edit quiz" aria-label="Edit this quiz">
+                            <i class="fas fa-edit" aria-hidden="true"></i>
                         </a>
                         {% endif %}
                         {% if user.is_authenticated %}
@@ -39,15 +39,17 @@
                                 data-quiz-id="{{ quiz.id }}"
                                 data-csrf-token="{{ csrf_token }}"
                                 data-saved="{% if quiz in user.profile.saved_quizzes.all %}true{% else %}false{% endif %}"
-                                title="{% if quiz in user.profile.saved_quizzes.all %}Remove from saved{% else %}Save quiz{% endif %}">
-                            <i class="{% if quiz in user.profile.saved_quizzes.all %}fas{% else %}far{% endif %} fa-bookmark"></i>
+                                title="{% if quiz in user.profile.saved_quizzes.all %}Remove from saved{% else %}Save quiz{% endif %}"
+                                aria-label="{% if quiz in user.profile.saved_quizzes.all %}Remove quiz from saved{% else %}Save quiz to profile{% endif %}">
+                            <i class="{% if quiz in user.profile.saved_quizzes.all %}fas{% else %}far{% endif %} fa-bookmark" aria-hidden="true"></i>
                         </button>
                         {% endif %}
                         <button type="button" class="btn btn-sm btn-action share-btn" 
                                 data-quiz-url="{{ request.build_absolute_uri }}"
                                 data-quiz-title="{{ quiz.title }}"
-                                title="Share this quiz">
-                            <i class="fas fa-share-alt"></i>
+                                title="Share this quiz"
+                                aria-label="Share this quiz">
+                            <i class="fas fa-share-alt" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>

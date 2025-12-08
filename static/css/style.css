@@ -36,6 +36,41 @@
 }
 
 /*--------------------------------------------------------------
+# Accessibility
+--------------------------------------------------------------*/
+/* Skip to main content link */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--blaze-orange);
+    color: var(--carbon-black);
+    padding: 8px 16px;
+    z-index: 10000;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 0 0 4px 0;
+    transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+    top: 0;
+    outline: 2px solid var(--platinum);
+    outline-offset: 2px;
+}
+
+/* Focus styles for keyboard navigation */
+:focus-visible {
+    outline: 2px solid var(--blaze-orange);
+    outline-offset: 2px;
+}
+
+/* Remove focus outline for mouse users but keep for keyboard */
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
 body {
@@ -341,6 +376,13 @@ p {
     color: var(--platinum);
     cursor: pointer;
     padding: 10px;
+    background: none;
+    border: none;
+}
+
+.mobile-nav-toggle:focus {
+    outline: 2px solid var(--blaze-orange);
+    outline-offset: 2px;
 }
 
 /*--------------------------------------------------------------

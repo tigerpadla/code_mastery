@@ -66,12 +66,20 @@
         e.preventDefault();
         const navmenu = document.getElementById('navmenu');
         const toggle = document.querySelector('.mobile-nav-toggle');
+        const icon = toggle.querySelector('i');
         
         if (navmenu && toggle) {
-            navmenu.classList.toggle('mobile-nav-active');
-            toggle.classList.toggle('fa-bars');
-            toggle.classList.toggle('fa-xmark');
+            const isActive = navmenu.classList.toggle('mobile-nav-active');
             document.body.classList.toggle('mobile-nav-active');
+            
+            // Update icon
+            if (icon) {
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-xmark');
+            }
+            
+            // Update aria-expanded for accessibility
+            toggle.setAttribute('aria-expanded', isActive);
         }
     });
 
@@ -89,10 +97,15 @@
         setTimeout(function() {
             const navmenu = document.getElementById('navmenu');
             const toggle = document.querySelector('.mobile-nav-toggle');
+            const icon = toggle ? toggle.querySelector('i') : null;
+            
             if (navmenu) navmenu.classList.remove('mobile-nav-active');
             if (toggle) {
-                toggle.classList.add('fa-bars');
-                toggle.classList.remove('fa-xmark');
+                toggle.setAttribute('aria-expanded', 'false');
+            }
+            if (icon) {
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-xmark');
             }
             document.body.classList.remove('mobile-nav-active');
         }, 150);
