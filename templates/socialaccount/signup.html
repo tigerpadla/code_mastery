@@ -71,16 +71,18 @@
                         </form>
 
                         <!-- Footer Link -->
-                        <div class="text-center mt-4">
-                            <p class="mb-0">
-                                Already have an account? 
-                                <a href="{% url 'account_login' %}" class="text-orange fw-semibold">Sign In</a>
-                            </p>
-                        </div>
+                        <p class="text-center text-muted mb-0">
+                            Already have an account? 
+                            <a href="{% url 'account_login' %}" class="text-orange fw-semibold">Sign In</a>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/pages/auth.css' %}" rel="stylesheet">
 {% endblock %}
