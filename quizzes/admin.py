@@ -16,7 +16,6 @@ class QuizAdmin(admin.ModelAdmin):
     list_editable = ('is_featured',)
     search_fields = ('title', 'description', 'creator__username', 'slug')
     readonly_fields = ('slug', 'created_at', 'updated_at')
-    prepopulated_fields = {'slug': ('title',)}
     inlines = [QuestionInline]
 
 
