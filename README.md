@@ -13,7 +13,7 @@
 
 ![Code Mastery Mockup](docs/screenshots/mockup.png)
 
-**Master code, one quiz at a time.**
+### **Master code, one quiz at a time**
 
 Code Mastery is an AI-powered quiz platform designed for developers, bootcamp students, and educators alike. Instantly generate quizzes on any programming topic using AI, create custom quizzes to share with your students or community, track your learning progress, and keep your coding knowledge fresh - whether you're learning, teaching, or preparing for interviews.
 
@@ -330,6 +330,13 @@ The database uses PostgreSQL (via Neon) and follows a relational model with the 
 - Quiz cards showing title, question count, and creator
 - Quick access to start any quiz
 
+<details>
+<summary>View Homepage Screenshot</summary>
+
+![Homepage](docs/screenshots/home-page.png)
+
+</details>
+
 #### 🤖 AI Quiz Generation
 
 **Topic-Based Generation**
@@ -404,6 +411,13 @@ This approach ensures the platform remains sustainable while still allowing pote
 - Removes all associated questions and attempts
 - Only quiz creator can delete their quizzes
 
+<details>
+<summary>View Create Quiz Page Screenshot</summary>
+
+![Create Quiz Page](docs/screenshots/create-quiz-page.png)
+
+</details>
+
 #### 📝 Taking Quizzes
 
 **Quiz Detail Page**
@@ -420,6 +434,19 @@ This approach ensures the platform remains sustainable while still allowing pote
   - Correct answer indicated
   - Explanation revealed
 - Options to retake, share, or return home
+
+<details>
+<summary>View Quiz Page Screenshots</summary>
+
+**Quiz Page**
+
+![Quiz Page](docs/screenshots/quiz-page.png)
+
+**Results Page**
+
+![Results Page](docs/screenshots/results-page.png)
+
+</details>
 
 #### 👤 User Profiles
 
@@ -438,6 +465,13 @@ This approach ensures the platform remains sustainable while still allowing pote
 **Public Profiles**
 - View other users' profiles and created quizzes
 - Saved quizzes hidden for privacy
+
+<details>
+<summary>View Profile Page Screenshot</summary>
+
+![Profile Page](docs/screenshots/profile-page.png)
+
+</details>
 
 #### 💾 Save & Share Quizzes
 
@@ -464,6 +498,13 @@ This approach ensures the platform remains sustainable while still allowing pote
 - See which questions were correct/incorrect
 - Review explanations for learning
 
+<details>
+<summary>View Quiz History Page Screenshot</summary>
+
+![Quiz History Page](docs/screenshots/quiz-history-page.png)
+
+</details>
+
 #### 🔔 Notifications
 
 **Notification Types**
@@ -475,6 +516,13 @@ This approach ensures the platform remains sustainable while still allowing pote
 - Mark individual or all as read
 - Click notification to view related quiz
 - Real-time badge updates
+
+<details>
+<summary>View Notifications Page Screenshot</summary>
+
+![Notifications Page](docs/screenshots/notifications-page.png)
+
+</details>
 
 #### 🔐 Authentication
 
@@ -489,6 +537,13 @@ This approach ensures the platform remains sustainable while still allowing pote
 - Secure session handling
 - Guest quiz count tracking
 - Redirect to intended page after login
+
+<details>
+<summary>View Signup Page Screenshot</summary>
+
+![Signup Page](docs/screenshots/signup-page.png)
+
+</details>
 
 #### ♿ Accessibility Features
 
@@ -506,6 +561,13 @@ This approach ensures the platform remains sustainable while still allowing pote
 - Breakpoints: mobile (<768px), tablet (768-1199px), desktop (1200px+)
 - Touch-friendly tap targets
 - Optimized images and assets
+
+<details>
+<summary>View Mobile Responsive Page Screenshot</summary>
+
+![Mobile Homepage](docs/screenshots/mobile-home-page.png)
+
+</details>
 
 ### Future Features
 
@@ -922,9 +984,9 @@ AI tools played a significant role in accelerating development and improving cod
 
 ## Acknowledgements
 
-- **Code Institute** - For the Full Stack Developer curriculum and capstone project framework
-- **GitHub Copilot** - AI pair programming assistant that significantly accelerated development, debugging, and documentation
-- **Bootcamp Facilitator** - For guidance and feedback throughout the project
+- **Code Institute** - For the Full Stack Developer curriculum and the opportunity to build this capstone project
+- **GitHub Copilot** - AI pair programming assistant that helped accelerate development, debugging, and documentation
+- **Dillon McCaffrey** - For guidance and feedback throughout the bootcamp and this project
 - **Code Institute Staff and Students** - For support and problem-solving assistance
 
 ---
