@@ -1,8 +1,8 @@
-# <img src="static/images/logo-loader.png" alt="Code Mastery Logo" width="20" height="20"> Code Mastery
+# <img src="static/images/logo-loader.png" alt="Code Mastery Logo" width="30" height="30"> Code Mastery
 
-![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white)
-![Django](https://img.shields.io/badge/Django-5.2-green?logo=django&logoColor=white)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple?logo=bootstrap&logoColor=white)
+[![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white)](#languages)
+[![Django](https://img.shields.io/badge/Django-5.2-green?logo=django&logoColor=white)](#frameworks--libraries)
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple?logo=bootstrap&logoColor=white)](#frameworks--libraries)
 [![Heroku](https://img.shields.io/badge/Deployed-Heroku-430098?logo=heroku&logoColor=white)](https://code-mastery-6f4f19cafdb0.herokuapp.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 [![HTML](https://img.shields.io/badge/HTML-Validated-success?logo=w3c&logoColor=white)](#html-validation-w3c)
@@ -17,9 +17,9 @@
 
 Code Mastery is an AI-powered quiz platform designed for developers, bootcamp students, and educators alike. Instantly generate quizzes on any programming topic using AI, create custom quizzes to share with your students or community, track your learning progress, and keep your coding knowledge fresh - whether you're learning, teaching, or preparing for interviews.
 
-<img src="static/images/logo-loader.png" alt="Code Mastery Logo" width="14" height="14"> **[Live Site](https://code-mastery-6f4f19cafdb0.herokuapp.com/)**
+<img src="static/images/logo-loader.png" alt="Code Mastery Logo" width="15" height="15"> **[Live Site](https://code-mastery-6f4f19cafdb0.herokuapp.com/)**
 
-<img src="https://img.icons8.com/ios-glyphs/30/ffffff/github.png" alt="GitHub" width="14" height="14"> **[GitHub Repository](https://github.com/tigerpadla/code_mastery)**
+<img src="https://img.icons8.com/ios-glyphs/30/ffffff/github.png" alt="GitHub" width="15" height="15"> **[GitHub Repository](https://github.com/tigerpadla/code_mastery)**
 
 ---
 
