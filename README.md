@@ -569,6 +569,10 @@ This approach ensures the platform remains sustainable while still allowing pote
 
 </details>
 
+#### 🚫 Custom Error Pages
+
+- **404 Page** - Branded error page matching site design with navigation back to home
+
 ### Future Features
 
 | Feature | Description |
