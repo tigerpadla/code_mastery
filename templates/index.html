@@ -178,12 +178,14 @@
                     <i class="fas fa-pen me-2"></i>Create Manual Quiz
                 </a>
                 {% else %}
-                <a href="{% url 'account_signup' %}" class="btn btn-primary btn-lg me-3">
-                    <i class="fas fa-rocket me-2"></i>Get Started Free
-                </a>
-                <a href="{% url 'account_login' %}" class="btn btn-outline-primary btn-lg">
-                    Already have an account?
-                </a>
+                <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-3">
+                    <a href="{% url 'account_signup' %}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-rocket me-2"></i>Get Started Free
+                    </a>
+                    <a href="{% url 'account_login' %}" class="btn btn-outline-primary btn-lg">
+                        Already have an account?
+                    </a>
+                </div>
                 {% endif %}
             </div>
         </div>
