@@ -12,17 +12,22 @@ class QuizForm(forms.ModelForm):
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter quiz title...',
-                'maxlength': '200',
+                'maxlength': '100',
             }),
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter a brief description of your quiz (optional)...',
                 'rows': 3,
+                'maxlength': '300',
             }),
         }
         labels = {
             'title': 'Quiz Title',
             'description': 'Description',
+        }
+        help_texts = {
+            'title': 'Max 100 characters',
+            'description': 'Max 300 characters',
         }
 
 
@@ -44,22 +49,27 @@ class QuestionForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Enter your question...',
                 'rows': 2,
+                'maxlength': '500',
             }),
             'option_a': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Option A',
+                'maxlength': '200',
             }),
             'option_b': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Option B',
+                'maxlength': '200',
             }),
             'option_c': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Option C',
+                'maxlength': '200',
             }),
             'option_d': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Option D',
+                'maxlength': '200',
             }),
             'correct_answer': forms.Select(attrs={
                 'class': 'form-select',
@@ -68,6 +78,7 @@ class QuestionForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Explain the correct answer (optional)...',
                 'rows': 2,
+                'maxlength': '500',
             }),
         }
         labels = {

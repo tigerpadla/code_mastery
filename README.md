@@ -990,7 +990,7 @@ AI tools played a significant role in accelerating development and improving cod
 
 - **Code Institute** - For the Full Stack Developer curriculum and the opportunity to build this capstone project
 - **GitHub Copilot** - AI pair programming assistant that helped accelerate development, debugging, and documentation
-- **Dillon McCaffrey** - For guidance and feedback throughout the bootcamp and this project
+- **Dillon Mc Caffrey** - For guidance and feedback throughout the bootcamp and this project
 - **Code Institute Staff and Students** - For support and problem-solving assistance
 
 ---
