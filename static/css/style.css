@@ -715,3 +715,43 @@ p {
         font-size: 0.85rem;
     }
 }
+
+/*--------------------------------------------------------------
+# 404 Error Page
+--------------------------------------------------------------*/
+.error-page {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+}
+
+.error-code {
+    font-size: 8rem;
+    font-weight: 700;
+    color: var(--blaze-orange);
+    line-height: 1;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 40px rgba(255, 100, 0, 0.3);
+}
+
+.error-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--platinum);
+}
+
+.error-message {
+    font-size: 1.1rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+@media (max-width: 576px) {
+    .error-code {
+        font-size: 5rem;
+    }
+
+    .error-title {
+        font-size: 1.5rem;
+    }
+}
