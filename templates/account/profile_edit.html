@@ -24,8 +24,8 @@
                             {% csrf_token %}
                             
                             <!-- Avatar Section -->
-                            <div class="mb-4">
-                                <label class="form-label fw-semibold">Profile Avatar</label>
+                            <fieldset class="mb-4">
+                                <legend class="form-label fw-semibold">Profile Avatar</legend>
                                 <div class="avatar-selection">
                                     <div class="row g-3">
                                         <!-- Male Avatar -->
@@ -86,7 +86,7 @@
                                     <input type="file" name="custom_avatar" id="custom_avatar" 
                                            class="form-control" accept="image/jpeg,image/png,image/webp">
                                 </div>
-                            </div>
+                            </fieldset>
 
                             <!-- Bio Section -->
                             <div class="mb-4">
