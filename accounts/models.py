@@ -45,7 +45,11 @@ class Profile(models.Model):
     def get_avatar_url(self):
         """Return the appropriate avatar URL based on choice."""
         if self.avatar == self.AvatarChoice.CUSTOM and self.custom_avatar:
-            return self.custom_avatar.url
+            url = self.custom_avatar.url
+            # Ensure HTTPS for Cloudinary URLs
+            if url.startswith('http://'):
+                url = url.replace('http://', 'https://', 1)
+            return url
         elif self.avatar == self.AvatarChoice.FEMALE:
             return '/static/images/user-female-icon.png'
         else:

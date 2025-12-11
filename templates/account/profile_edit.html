@@ -64,7 +64,7 @@
                                                        {% if profile.avatar == 'custom' %}checked{% endif %}>
                                                 <label for="avatar-custom" class="avatar-label">
                                                     {% if profile.custom_avatar %}
-                                                    <img src="{{ profile.custom_avatar.url }}" 
+                                                    <img src="{{ profile.get_avatar_url }}" 
                                                          alt="Custom Avatar" class="avatar-preview" id="custom-preview">
                                                     {% else %}
                                                     <div class="avatar-preview custom-upload-placeholder" id="custom-preview">
