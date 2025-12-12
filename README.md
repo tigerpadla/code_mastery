@@ -2,12 +2,20 @@
 
 [![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white)](#languages)
 [![Django](https://img.shields.io/badge/Django-5.2-green?logo=django&logoColor=white)](#frameworks--libraries)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?logo=postgresql&logoColor=white)](#technologies-used)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES11-F7DF1E?logo=javascript&logoColor=black)](#languages)
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)](#languages)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)](#languages)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple?logo=bootstrap&logoColor=white)](#frameworks--libraries)
+[![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5?logo=cloudinary&logoColor=white)](#tools--services)
+[![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=white)](#tools--services)
+[![AI Powered](https://img.shields.io/badge/AI-GPT--4o--mini-00A67E?logo=openai&logoColor=white)](#ai-implementation)
 [![Heroku](https://img.shields.io/badge/Deployed-Heroku-430098?logo=heroku&logoColor=white)](https://code-mastery-6f4f19cafdb0.herokuapp.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+
 [![HTML](https://img.shields.io/badge/HTML-Validated-success?logo=w3c&logoColor=white)](#html-validation-w3c)
 [![CSS](https://img.shields.io/badge/CSS-Validated-success?logo=w3c&logoColor=white)](#css-validation-w3c-jigsaw)
-[![JavaScript](https://img.shields.io/badge/JS-ES11_Validated-success?logo=javascript&logoColor=white)](#javascript-validation-jshint)
+[![JavaScript](https://img.shields.io/badge/JS-Validated-success?logo=javascript&logoColor=white)](#javascript-validation-jshint)
 [![PEP8](https://img.shields.io/badge/PEP8-Compliant-success?logo=python&logoColor=white)](#python-validation-pep8)
 [![Tests](https://img.shields.io/badge/Tests-63_Passing-success?logo=pytest&logoColor=white)](#automated-testing)
 
