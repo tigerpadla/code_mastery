@@ -208,8 +208,12 @@ Return ONLY valid JSON in this exact format (no markdown, no code blocks):
 Requirements:
 - Questions should test practical programming knowledge
 - Options should be plausible (avoid obviously wrong answers)
-- For code snippets, use [code]...[/code] tags, e.g.: [code]console.log("hello")[/code]
-- For JS template literals use backticks: [code]const x = `Hello ${{name}}`[/code]
+- NEVER use markdown backticks to format code. ONLY use [code] or [codeblock] tags
+- For SHORT inline code, use [code]...[/code] tags: [code]print("hello")[/code]
+- For multi-line code or full programs, use [codeblock]...[/codeblock] tags
+- CRITICAL: If a question asks "What is the output?" you MUST include the code in [codeblock] tags in the question text
+- For answer options containing code, wrap in [code] tags: [code]myFunction()[/code]
+- Do NOT add punctuation like ? or : after code blocks
 - Explanations should be educational and concise
 - Difficulty: {difficulty} (easy=beginner, medium=intermediate, hard=advanced)"""
 

@@ -52,6 +52,7 @@
 .question-text {
     font-size: 1.1rem;
     line-height: 1.6;
+    color: var(--platinum);
 }
 
 /*--------------------------------------------------------------
